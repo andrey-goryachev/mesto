@@ -1,31 +1,40 @@
 @import url(../vendor/normalize.css);
 @import url(../vendor/fonts/Inter/inter.css);
 
-.page {
-  padding: 0;
-  margin: 0;
-  border: 0;
-  background-color: #000;
-  font-family: Inter, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
+/* Page */
+@import url(../blocks/page/page.css);
+@import url(../blocks/page/__container/page__container.css);
 
-.page__container {
-  max-width: 1280px;
-  min-width: 320px;
-  margin: 0 auto;
-}
+/* Separate blocks */
+@import url(../blocks/button/button.css);
+@import url(../blocks/button/_opacity/_6/button_opacity_6.css);
+@import url(../blocks/button/_opacity/_5/button_opacity_5.css);
+@import url(../blocks/button/_opacity/_8/button_opacity_8.css);
+@import url(../blocks/button/_active/button_active.css);
 
-.header {
-  background-color: darkgreen;
-}
+/* Header */
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
 
-.content {
-  background-color: darkgoldenrod;
-}
+/* Content */
+@import url(../blocks/content/content.css);
 
-.footer {
-  background-color: wheat;
-}
+/* Profile */
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__info/profile__info.css);
+@import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__edit-button/profile__edit-button.css);
+@import url(../blocks/profile/__description/profile__description.css);
+@import url(../blocks/profile/__add-button/__add-button.css);
+
+/* Elements */
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/elements/__list/elements__list.css);
+@import url(../blocks/elements/__card/elements__card.css);
+@import url(../blocks/elements/__photo/elements__photo.css);
+@import url(../blocks/elements/__title/elements__title.css);
+@import url(../blocks/elements/__like/elements__like.css);
+
+/* Footer */
+@import url(../blocks/footer/footer.css);
