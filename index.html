@@ -9,58 +9,69 @@
   <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="page">
-  <div class="page__container">
-    <header class="header">
-      <img class="header__logo" src="./images/logo.svg" alt="Логотип Место Россия">
-    </header>
-    <main class="content">
-      <section class="profile">
-        <img src="./images/avatar.jpg" alt="Фото профиля" class="profile__avatar">
-        <div class="profile__info">
-          <p class="profile__name">Жак-Ив Кусто</p>
-          <button class="profile__edit-button button button_opacity_6"></button>
-          <p class="profile__description">Исследователь океана</p>
-        </div>
-        <button class="profile__add-button button button_opacity_6"></button>
-      </section>
-      <section class="elements">
-        <ul class="elements__list">
-          <li class="elements__card">
-            <img src="./images/teriberka.jpg" alt="Териберка" class="elements__photo">
-            <p class="elements__title">Териберка</p>
-            <button class="elements__like button button_opacity_5"></button>
-          </li>
-          <li class="elements__card">
-            <img src="./images/baikal.jpg" alt="Байкал" class="elements__photo">
-            <p class="elements__title">Байкал</p>
-            <button class="elements__like button button_opacity_5"></button>
-          </li>
-          <li class="elements__card">
-            <img src="./images/teleckoe%20ozero.jpg" alt="Телецкое озеро" class="elements__photo">
-            <p class="elements__title">Телецкое озеро</p>
-            <button class="elements__like button button_opacity_5"></button>
-          </li>
-          <li class="elements__card">
-            <img src="./images/shumka.jpg" alt="Водопад Шумка" class="elements__photo">
-            <p class="elements__title">Водопад Шумка</p>
-            <button class="elements__like button button_opacity_5"></button>
-          </li>
-          <li class="elements__card">
-            <img src="./images/dombai.jpg" alt="Домбай" class="elements__photo">
-            <p class="elements__title">Домбай</p>
-            <button class="elements__like button button_opacity_5"></button>
-          </li>
-          <li class="elements__card">
-            <img src="./images/konduki.jpg" alt="Кондуки" class="elements__photo">
-            <p class="elements__title">Кондуки</p>
-            <button class="elements__like button button_opacity_5"></button>
-          </li>
-        </ul>
-      </section>
-    </main>
-    <footer class="footer">
-      © 2022 Mesto Russia
-    </footer>
-  </div>
+<div class="page__container">
+  <header class="header">
+    <img class="header__logo" src="./images/logo.svg" alt="Логотип Место Россия">
+  </header>
+  <main class="content">
+    <section class="profile">
+      <img src="./images/avatar.jpg" alt="Фото профиля" class="profile__avatar">
+      <div class="profile__info">
+        <p class="profile__name">Жак-Ив Кусто</p>
+        <button class="profile__edit-button button button_opacity_6"></button>
+        <p class="profile__description">Исследователь океана</p>
+      </div>
+      <button class="profile__add-button button button_opacity_6"></button>
+    </section>
+    <div class="popup">
+      <div class="popup__container">
+        <button class="popup__cross button button_opacity_6"></button>
+        <p class="popup__title">Редактировать профиль</p>
+        <form action="" class="popup__form">
+          <input class="popup__name input" type="text" placeholder="Жак-Ив Кусто">
+          <input class="popup__description input" type="text" placeholder="Исследователь океана">
+          <button class="popup__submit button button button_opacity_8" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <section class="elements">
+      <ul class="elements__list">
+        <li class="elements__card">
+          <img src="./images/teriberka.jpg" alt="Териберка" class="elements__photo">
+          <p class="elements__title">Териберка</p>
+          <button class="elements__like button button_opacity_5"></button>
+        </li>
+        <li class="elements__card">
+          <img src="./images/baikal.jpg" alt="Байкал" class="elements__photo">
+          <p class="elements__title">Байкал</p>
+          <button class="elements__like button button_opacity_5"></button>
+        </li>
+        <li class="elements__card">
+          <img src="./images/teleckoe%20ozero.jpg" alt="Телецкое озеро" class="elements__photo">
+          <p class="elements__title">Телецкое озеро</p>
+          <button class="elements__like button button_opacity_5"></button>
+        </li>
+        <li class="elements__card">
+          <img src="./images/shumka.jpg" alt="Водопад Шумка" class="elements__photo">
+          <p class="elements__title">Водопад Шумка</p>
+          <button class="elements__like button button_opacity_5"></button>
+        </li>
+        <li class="elements__card">
+          <img src="./images/dombai.jpg" alt="Домбай" class="elements__photo">
+          <p class="elements__title">Домбай</p>
+          <button class="elements__like button button_opacity_5"></button>
+        </li>
+        <li class="elements__card">
+          <img src="./images/konduki.jpg" alt="Кондуки" class="elements__photo">
+          <p class="elements__title">Кондуки</p>
+          <button class="elements__like button button_opacity_5"></button>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer class="footer">
+    © 2022 Mesto Russia
+  </footer>
+</div>
 </body>
 </html>
