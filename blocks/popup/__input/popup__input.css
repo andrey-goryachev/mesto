@@ -1,4 +1,4 @@
-.input {
+.popup__input {
   display: block;
   width: 100%;
   font-family: Inter, Arial, sans-serif;
@@ -12,28 +12,28 @@
   border-bottom: 1px solid #00000020;
 }
 
-.input:focus {
+.popup__input:focus {
   outline: none;
 }
 
 @media screen and (max-width: 540px) {
-  .input {
+  .popup__input {
     padding-bottom: 9px;
   }
 }
 
-/*.input::-webkit-input-placeholder {*/
+/*.__input::-webkit-__input-placeholder {*/
 /*  color: #000;*/
 /*}*/
 
-/*.input::-moz-placeholder {*/
+/*.__input::-moz-placeholder {*/
 /*  color: #000;*/
 /*}*/
 
-/*.input::-ms-input-placeholder {*/
+/*.__input::-ms-__input-placeholder {*/
 /*  color: #000;*/
 /*}*/
 
-/*.input::placeholder {*/
+/*.__input::placeholder {*/
 /*  color: #000;*/
 /*}*/
