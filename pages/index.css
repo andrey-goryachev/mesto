@@ -18,8 +18,9 @@
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__title/profile__title.css);
 @import url(../blocks/profile/__button/profile__button.css);
+@import url(../blocks/profile/__button/_function/_add/profile__button_function_add.css);
+@import url(../blocks/profile/__button/_function/_edit/profile__button_function_edit.css);
 @import url(../blocks/profile/__text/profile__text.css);
-@import url(../blocks/profile/__add-button/__add-button.css);
 
 /* Elements */
 @import url(../blocks/elements/elements.css);
