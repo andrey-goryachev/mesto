@@ -8,9 +8,9 @@ let popupInputDescription = document.querySelector('.popup__input_content_descri
 let formPopup = document.querySelector('.popup__form');
 
 function openPopup() {
-  popup.classList.add('popup_opened');
   popupInputName.value = profileName.textContent;
   popupInputDescription.value = profileDescription.textContent;
+  popup.classList.add('popup_opened');
 }
 
 function closePopup() {
