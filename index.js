@@ -1,4 +1,4 @@
-let editButton = document.querySelector('.profile__edit-button');
+let editButton = document.querySelector('.profile__button');
 let popup = document.querySelector('.popup')
 let closeButton = document.querySelector('.popup__cross')
 let profileName = document.querySelector('.profile__name')
