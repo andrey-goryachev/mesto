@@ -8,6 +8,9 @@
   font-style: normal;
   grid-column-start: 1;
   grid-column-end: 3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
