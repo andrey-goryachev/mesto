@@ -38,9 +38,9 @@
 /* Separate blocks */
 /* Button */
 @import url(../blocks/button/button.css);
-@import url(../blocks/button/_opacity/_6/button_opacity_6.css);
-@import url(../blocks/button/_opacity/_5/button_opacity_5.css);
-@import url(../blocks/button/_opacity/_8/button_opacity_8.css);
+@import url(../blocks/button/_opacity/_medium/button_opacity_medium.css);
+@import url(../blocks/button/_opacity/_high/button_opacity_high.css);
+@import url(../blocks/button/_opacity/_light/button_opacity_light.css);
 @import url(../blocks/button/_active/button_active.css);
 
 /* Pop-up */
