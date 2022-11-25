@@ -13,11 +13,6 @@
   .popup__container {
     width: 282px;
     min-height: 322px;
-    /*background-color: #fff;*/
-    /*border-radius: 10px;*/
-    /*margin: auto;*/
     padding: 25px 22px;
-    /*box-sizing: border-box;*/
-    /*position: relative;*/
   }
 }
