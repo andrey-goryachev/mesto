@@ -1,11 +1,14 @@
-let editButton = document.querySelector('.profile__button_function_edit');
-let popup = document.querySelector('.popup')
-let closeButton = document.querySelector('.popup__cross')
+let editProfileButton = document.querySelector('.profile__button_function_edit');
+let addCardButton = document.querySelector('.profile__button_function_add');
+let popupProfile = document.querySelector('.popup_content_profile')
+let popupCard = document.querySelector('.popup_content_card')
+let closeProfileButton = popupProfile.querySelector('.popup__cross')
+let closeCardButton = popupCard.querySelector('.popup__cross')
 let profileName = document.querySelector('.profile__title')
 let profileDescription = document.querySelector('.profile__text')
-let popupInputName = document.querySelector('.popup__input_content_name');
-let popupInputDescription = document.querySelector('.popup__input_content_description');
-let formPopup = document.querySelector('.popup__form');
+let popupInputName = popupProfile.querySelector('.popup__input_content_name');
+let popupInputDescription = popupProfile.querySelector('.popup__input_content_description');
+let formProfilePopup = popupProfile.querySelector('.popup__form');
 let cards = document.querySelector('.elements__list');
 const initialCards = [
   {
@@ -34,21 +37,28 @@ const initialCards = [
   },
 ];
 
-function openPopup() {
+function openPopupProfile() {
   popupInputName.value = profileName.textContent;
   popupInputDescription.value = profileDescription.textContent;
-  popup.classList.add('popup_opened');
+  popupProfile.classList.add('popup_opened');
 }
 
-function closePopup() {
-  popup.classList.remove('popup_opened');
+function openPopupCard() {
+  popupCard.classList.add('popup_opened');
+}
+
+function closePopupProfile() {
+  popupProfile.classList.remove('popup_opened');
+}
+function closePopupCard() {
+  popupCard.classList.remove('popup_opened');
 }
 
 function writeProfile(e) {
   e.preventDefault();
   profileName.textContent = popupInputName.value;
   profileDescription.textContent = popupInputDescription.value;
-  closePopup();
+  closePopupProfile();
 }
 
 function addCard(card) {
@@ -65,6 +75,9 @@ function addAllCards () {
 }
 
 document.addEventListener('DOMContentLoaded', addAllCards);
-editButton.addEventListener('click', openPopup);
-closeButton.addEventListener('click', closePopup);
-formPopup.addEventListener('submit', writeProfile);
+editProfileButton.addEventListener('click', openPopupProfile);
+closeProfileButton.addEventListener('click', closePopupProfile);
+formProfilePopup.addEventListener('submit', writeProfile);
+
+addCardButton.addEventListener('click', openPopupCard)
+closeCardButton.addEventListener('click', closePopupCard)

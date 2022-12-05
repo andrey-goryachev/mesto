@@ -1,0 +1,14 @@
+.popup__input_content_place {
+  margin-bottom: 26px;
+}
+
+@media screen and (max-width: 540px) {
+  .popup__input_content_name {
+    margin-bottom: 30px;
+  }
+}
+
+.popup__input_content_place::-webkit-input-placeholder {color:#C4C4C4;}
+.popup__input_content_place::-moz-placeholder          {color:#C4C4C4;}
+.popup__input_content_place::-ms-input-placeholder     {color:#C4C4C4;}
+.popup__input_content_place::placeholder               {color:#C4C4C4;}
