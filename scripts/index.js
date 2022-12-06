@@ -41,8 +41,9 @@ const initialCards = [
     link: 'https://images.unsplash.com/photo-1596003903067-bf5762ad5c19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fCVEMSU4MiVEMCVCNSVEMCVCQiVEMCVCNSVEMSU4NiVEMCVCQSVEMCVCRSVEMCVCNXxlbnwwfHwwfHw%3D&w=1000&q=80'
   },
 ];
-// Лайки
-const listLikes = document.querySelector('.elements__list');
+// Элементы
+const listElements = document.querySelector('.elements__list');
+
 
 
 function openPopupProfile() {
@@ -95,6 +96,14 @@ function createCard(e) {
   closePopupCard();
 }
 
+function deleteCard(e) {
+  let deleteButton = e.target;
+  if (deleteButton.classList.contains('elements__bin')) {
+    let deleteElement = deleteButton.closest('.elements__card');
+    deleteElement.remove();
+  }
+}
+
 function toggleLike (e) {
   let clickElement = e.target;
   console.log(clickElement.classList)
@@ -115,4 +124,6 @@ addCardButton.addEventListener('click', openPopupCard);
 closeCardButton.addEventListener('click', closePopupCard);
 formCardPopup.addEventListener('submit', createCard);
 // Лайки
-listLikes.addEventListener('click', toggleLike);
+listElements.addEventListener('click', toggleLike);
+// Корзина
+listElements.addEventListener('click', deleteCard);
