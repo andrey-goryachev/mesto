@@ -41,6 +41,9 @@ const initialCards = [
     link: 'https://images.unsplash.com/photo-1596003903067-bf5762ad5c19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fCVEMSU4MiVEMCVCNSVEMCVCQiVEMCVCNSVEMSU4NiVEMCVCQSVEMCVCRSVEMCVCNXxlbnwwfHwwfHw%3D&w=1000&q=80'
   },
 ];
+// Лайки
+const listLikes = document.querySelector('.elements__list');
+
 
 function openPopupProfile() {
   popupProfileInputName.value = profileName.textContent;
@@ -92,13 +95,24 @@ function createCard(e) {
   closePopupCard();
 }
 
+function toggleLike (e) {
+  let clickElement = e.target;
+  console.log(clickElement.classList)
+  if (clickElement.classList.contains('elements__like')) {
+    e.target.classList.toggle('elements__like_active');
+  }
+}
+
+// Слушаем события
+// Загрузка страницы
 document.addEventListener('DOMContentLoaded', addAllCardsToPage);
-// События формы профиля
+// Профиль
 editProfileButton.addEventListener('click', openPopupProfile);
 closeProfileButton.addEventListener('click', closePopupProfile);
 formProfilePopup.addEventListener('submit', writeProfile);
-// События формы места
+// Места
 addCardButton.addEventListener('click', openPopupCard);
 closeCardButton.addEventListener('click', closePopupCard);
 formCardPopup.addEventListener('submit', createCard);
-
+// Лайки
+listLikes.addEventListener('click', toggleLike);
