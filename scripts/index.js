@@ -41,8 +41,13 @@ const initialCards = [
     link: 'https://images.unsplash.com/photo-1596003903067-bf5762ad5c19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fCVEMSU4MiVEMCVCNSVEMCVCQiVEMCVCNSVEMSU4NiVEMCVCQSVEMCVCRSVEMCVCNXxlbnwwfHwwfHw%3D&w=1000&q=80'
   },
 ];
-// Элементы
+// Карточки с фото
 const listElements = document.querySelector('.elements__list');
+let popupImage = document.querySelector('.popup_content_photo');
+let containerPopupImage = popupImage.querySelector('.popup__container_content_photo')
+let imagePopupImage = popupImage.querySelector('.popup__photo')
+let descriptionPopupImage = popupImage.querySelector('.popup__description')
+let closeImagePopupButton = popupImage.querySelector('.popup__cross');
 
 
 
@@ -97,19 +102,37 @@ function createCard(e) {
 }
 
 function deleteCard(e) {
-  let deleteButton = e.target;
-  if (deleteButton.classList.contains('elements__bin')) {
-    let deleteElement = deleteButton.closest('.elements__card');
+  let clickElement = e.target;
+  if (clickElement.classList.contains('elements__bin')) {
+    console.log(clickElement)
+    let deleteElement = clickElement.closest('.elements__card');
     deleteElement.remove();
   }
 }
 
 function toggleLike (e) {
   let clickElement = e.target;
-  console.log(clickElement.classList)
   if (clickElement.classList.contains('elements__like')) {
     e.target.classList.toggle('elements__like_active');
   }
+}
+
+function openPopupImageCard (e) {
+  let clickElement = e.target;
+  if (clickElement.classList.contains('elements__photo')) {
+    const card = clickElement.closest('.elements__card');
+    const cardTitle = card.querySelector('.elements__title').textContent;
+    popupImage.classList.add('popup_opened');
+    imagePopupImage.src = clickElement.src;
+    imagePopupImage.alt = clickElement.alt;
+    descriptionPopupImage.textContent = cardTitle;
+  }
+}
+
+function closePopupImageCard () {
+  imagePopupImage.src = '';
+  popupImage.classList.remove('popup_opened');
+  descriptionPopupImage.textContent = '';
 }
 
 // Слушаем события
@@ -127,3 +150,6 @@ formCardPopup.addEventListener('submit', createCard);
 listElements.addEventListener('click', toggleLike);
 // Корзина
 listElements.addEventListener('click', deleteCard);
+// Фото
+listElements.addEventListener('click', openPopupImageCard);
+closeImagePopupButton.addEventListener('click', closePopupImageCard)
