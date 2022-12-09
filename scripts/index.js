@@ -102,7 +102,6 @@ function addAllCardsToPage() {
 function deleteCard(e) {
   let clickElement = e.target;
   if (clickElement.classList.contains('elements__bin')) {
-    console.log(clickElement)
     let deleteElement = clickElement.closest('.elements__card');
     deleteElement.remove();
   }
