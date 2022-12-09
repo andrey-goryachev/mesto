@@ -1,20 +1,20 @@
 // Профиль
 let popupProfile = document.querySelector('.popup_content_profile');
-let editProfileButton = document.querySelector('.profile__button_function_edit');
-let closeProfileButton = popupProfile.querySelector('.popup__cross');
+const buttonEditProfile = document.querySelector('.profile__button_function_edit');
+const buttonCloseProfileButton = popupProfile.querySelector('.popup__cross');
 let profileName = document.querySelector('.profile__title');
 let profileDescription = document.querySelector('.profile__text');
 let popupProfileInputName = popupProfile.querySelector('.popup__input_content_name');
 let popupProfileInputDescription = popupProfile.querySelector('.popup__input_content_description');
-let formProfilePopup = popupProfile.querySelector('.popup__form');
+const formProfilePopup = popupProfile.querySelector('.popup__form');
 // Место
 let popupCard = document.querySelector('.popup_content_card');
-let addCardButton = document.querySelector('.profile__button_function_add');
-let closeCardButton = popupCard.querySelector('.popup__cross');
-let popupCardInputName = document.querySelector('.popup__input_content_place');
-let popupCardInputLink = document.querySelector('.popup__input_content_link');
-let cards = document.querySelector('.elements__list');
-let formCardPopup = popupCard.querySelector('.popup__form');
+const buttonAddCard = document.querySelector('.profile__button_function_add');
+const buttonCloseCard = popupCard.querySelector('.popup__cross');
+const popupCardInputName = document.querySelector('.popup__input_content_place');
+const popupCardInputLink = document.querySelector('.popup__input_content_link');
+const cards = document.querySelector('.elements__list');
+const formCardPopup = popupCard.querySelector('.popup__form');
 const initialCards = [
   {
     name: 'Водопад Шумка',
@@ -44,11 +44,10 @@ const initialCards = [
 // Карточки с фото
 const listElements = document.querySelector('.elements__list');
 let popupImage = document.querySelector('.popup_content_photo');
-let containerPopupImage = popupImage.querySelector('.popup__container_content_photo')
 let imagePopupImage = popupImage.querySelector('.popup__photo')
 let descriptionPopupImage = popupImage.querySelector('.popup__description')
-let closeImagePopupButton = popupImage.querySelector('.popup__cross');
-
+const buttonCloseImagePopup = popupImage.querySelector('.popup__cross');
+const cardTemplate = document.querySelector('#elements__card').content;
 
 
 function openPopupProfile() {
@@ -76,20 +75,6 @@ function closePopupCard() {
   popupCard.classList.remove('popup_opened');
 }
 
-function addCard(card, position) {
-  const cardTemplate = document.querySelector('#elements__card').content;
-  const cardElement = cardTemplate.querySelector('.elements__card').cloneNode(true);
-  cardElement.querySelector('.elements__photo').src = card.link;
-  cardElement.querySelector('.elements__photo').alt = card.name;
-  cardElement.querySelector('.elements__title').textContent = card.name;
-  if (position === 'top') cards.append(cardElement);
-  if (position === 'bottom') cards.prepend(cardElement);
-}
-
-function addAllCardsToPage() {
-  initialCards.forEach(item => addCard(item, 'top'));
-}
-
 function createCard(e) {
   e.preventDefault();
   let card = {};
@@ -99,6 +84,19 @@ function createCard(e) {
   popupCardInputName.value = '';
   popupCardInputLink.value = '';
   closePopupCard();
+}
+
+function addCard(card, position = 'top') {
+  let cardElement = cardTemplate.querySelector('.elements__card').cloneNode(true);
+  cardElement.querySelector('.elements__photo').src = card.link;
+  cardElement.querySelector('.elements__photo').alt = card.name;
+  cardElement.querySelector('.elements__title').textContent = card.name;
+  if (position === 'top') cards.append(cardElement);
+  if (position === 'bottom') cards.prepend(cardElement);
+}
+
+function addAllCardsToPage() {
+  initialCards.forEach(item => addCard(item, 'top'));
 }
 
 function deleteCard(e) {
@@ -135,21 +133,21 @@ function closePopupImageCard () {
   descriptionPopupImage.textContent = '';
 }
 
-// Слушаем события
+// События
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', addAllCardsToPage);
 // Профиль
-editProfileButton.addEventListener('click', openPopupProfile);
-closeProfileButton.addEventListener('click', closePopupProfile);
+buttonEditProfile.addEventListener('click', openPopupProfile);
+buttonCloseProfileButton.addEventListener('click', closePopupProfile);
 formProfilePopup.addEventListener('submit', writeProfile);
 // Места
-addCardButton.addEventListener('click', openPopupCard);
-closeCardButton.addEventListener('click', closePopupCard);
+buttonAddCard.addEventListener('click', openPopupCard);
+buttonCloseCard.addEventListener('click', closePopupCard);
 formCardPopup.addEventListener('submit', createCard);
 // Лайки
 listElements.addEventListener('click', toggleLike);
 // Корзина
 listElements.addEventListener('click', deleteCard);
-// Фото
+// Фото попап
 listElements.addEventListener('click', openPopupImageCard);
-closeImagePopupButton.addEventListener('click', closePopupImageCard)
+buttonCloseImagePopup.addEventListener('click', closePopupImageCard)
