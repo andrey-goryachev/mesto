@@ -1,14 +1,14 @@
 // Профиль
-let popupProfile = document.querySelector('.popup_content_profile');
+const popupProfile = document.querySelector('.popup_content_profile');
 const buttonEditProfile = document.querySelector('.profile__button_function_edit');
 const buttonCloseProfileButton = popupProfile.querySelector('.popup__cross');
-let profileName = document.querySelector('.profile__title');
-let profileDescription = document.querySelector('.profile__text');
-let popupProfileInputName = popupProfile.querySelector('.popup__input_content_name');
-let popupProfileInputDescription = popupProfile.querySelector('.popup__input_content_description');
+const profileName = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__text');
+const popupProfileInputName = popupProfile.querySelector('.popup__input_content_name');
+const popupProfileInputDescription = popupProfile.querySelector('.popup__input_content_description');
 const formProfilePopup = popupProfile.querySelector('.popup__form');
 // Место
-let popupCard = document.querySelector('.popup_content_card');
+const popupCard = document.querySelector('.popup_content_card');
 const buttonAddCard = document.querySelector('.profile__button_function_add');
 const buttonCloseCard = popupCard.querySelector('.popup__cross');
 const popupCardInputName = document.querySelector('.popup__input_content_place');
@@ -43,9 +43,9 @@ const initialCards = [
 ];
 // Карточки с фото
 const listElements = document.querySelector('.elements__list');
-let popupImage = document.querySelector('.popup_content_photo');
-let imagePopupImage = popupImage.querySelector('.popup__photo')
-let descriptionPopupImage = popupImage.querySelector('.popup__description')
+const popupImage = document.querySelector('.popup_content_photo');
+const imagePopupImage = popupImage.querySelector('.popup__photo')
+const descriptionPopupImage = popupImage.querySelector('.popup__description')
 const buttonCloseImagePopup = popupImage.querySelector('.popup__cross');
 const cardTemplate = document.querySelector('#elements__card').content;
 
@@ -87,7 +87,7 @@ function closePopupCard() {
 
 function createCard(e) {
   e.preventDefault();
-  let card = {};
+  const card = {};
   card.name = popupCardInputName.value;
   card.link = popupCardInputLink.value;
   addCard(card, 'bottom')
@@ -97,7 +97,7 @@ function createCard(e) {
 }
 
 function addCard(card, position = 'top') {
-  let cardElement = cardTemplate.querySelector('.elements__card').cloneNode(true);
+  const cardElement = cardTemplate.querySelector('.elements__card').cloneNode(true);
   cardElement.querySelector('.elements__photo').src = card.link;
   cardElement.querySelector('.elements__photo').alt = card.name;
   cardElement.querySelector('.elements__title').textContent = card.name;
@@ -110,7 +110,7 @@ function addAllCardsToPage() {
 }
 
 function deleteCard(e) {
-  let clickElement = e.target;
+  const clickElement = e.target;
   if (clickElement.classList.contains('elements__bin')) {
     let deleteElement = clickElement.closest('.elements__card');
     deleteElement.remove();
@@ -118,14 +118,14 @@ function deleteCard(e) {
 }
 
 function toggleLike (e) {
-  let clickElement = e.target;
+  const clickElement = e.target;
   if (clickElement.classList.contains('elements__like')) {
-    e.target.classList.toggle('elements__like_active');
+    clickElement.classList.toggle('elements__like_active');
   }
 }
 
 function openPopupImageCard (e) {
-  let clickElement = e.target;
+  const clickElement = e.target;
   if (clickElement.classList.contains('elements__photo')) {
     const card = clickElement.closest('.elements__card');
     const cardTitle = card.querySelector('.elements__title').textContent;
