@@ -1,6 +1,6 @@
 .profile__text {
   margin: 0;
-  padding: 0;
+  padding: 9px 0 0;
   color: #fff;
   font-size: 18px;
   line-height: 22px;
@@ -23,6 +23,7 @@
 
 @media screen and (max-width: 425px) {
   .profile__text {
+    padding-top: 7px;
     font-size: 14px;
     line-height: 17px;
   }
