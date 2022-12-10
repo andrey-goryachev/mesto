@@ -50,14 +50,22 @@ const buttonCloseImagePopup = popupImage.querySelector('.popup__cross');
 const cardTemplate = document.querySelector('#elements__card').content;
 
 
+function openPopup (popup) {
+  popup.classList.add('popup_opened');
+}
+
+function closePopup (popup) {
+  popup.classList.remove('popup_opened')
+}
+
 function openPopupProfile() {
   popupProfileInputName.value = profileName.textContent;
   popupProfileInputDescription.value = profileDescription.textContent;
-  popupProfile.classList.add('popup_opened');
+  openPopup(popupProfile);
 }
 
 function closePopupProfile() {
-  popupProfile.classList.remove('popup_opened');
+  closePopup(popupProfile)
 }
 
 function writeProfile(e) {
@@ -68,11 +76,13 @@ function writeProfile(e) {
 }
 
 function openPopupCard() {
-  popupCard.classList.add('popup_opened');
+  // popupCard.classList.add('popup_opened');
+  openPopup(popupCard)
 }
 
 function closePopupCard() {
-  popupCard.classList.remove('popup_opened');
+  // popupCard.classList.remove('popup_opened');
+  closePopup(popupCard);
 }
 
 function createCard(e) {
@@ -119,7 +129,7 @@ function openPopupImageCard (e) {
   if (clickElement.classList.contains('elements__photo')) {
     const card = clickElement.closest('.elements__card');
     const cardTitle = card.querySelector('.elements__title').textContent;
-    popupImage.classList.add('popup_opened');
+    openPopup(popupImage)
     imagePopupImage.src = clickElement.src;
     imagePopupImage.alt = clickElement.alt;
     descriptionPopupImage.textContent = cardTitle;
@@ -128,9 +138,10 @@ function openPopupImageCard (e) {
 
 function closePopupImageCard () {
   imagePopupImage.src = '';
-  popupImage.classList.remove('popup_opened');
+  closePopup(popupImage);
   descriptionPopupImage.textContent = '';
 }
+
 
 // События
 // Загрузка страницы
