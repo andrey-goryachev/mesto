@@ -1,7 +1,6 @@
 // Профиль
 const popupProfile = document.querySelector('.popup_content_profile');
 const buttonEditProfile = document.querySelector('.profile__button_function_edit');
-const buttonCloseProfileButton = popupProfile.querySelector('.popup__cross');
 const profileName = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__text');
 const popupProfileInputName = popupProfile.querySelector('.popup__input_content_name');
@@ -10,7 +9,6 @@ const formProfilePopup = popupProfile.querySelector('.popup__form');
 // Место
 const popupCard = document.querySelector('.popup_content_card');
 const buttonAddCard = document.querySelector('.profile__button_function_add');
-const buttonCloseCard = popupCard.querySelector('.popup__cross');
 const popupCardInputName = document.querySelector('.popup__input_content_place');
 const popupCardInputLink = document.querySelector('.popup__input_content_link');
 const formCardPopup = popupCard.querySelector('.popup__form');
@@ -19,8 +17,9 @@ const cardsContainer = document.querySelector('.elements__list');
 const popupImage = document.querySelector('.popup_content_photo');
 const imagePopupImage = popupImage.querySelector('.popup__photo')
 const descriptionPopupImage = popupImage.querySelector('.popup__description')
-const buttonCloseImagePopup = popupImage.querySelector('.popup__cross');
 const cardTemplate = document.querySelector('#elements__card').content;
+// Общие
+const buttonCloseList = document.querySelectorAll('.popup__cross');
 
 
 function openPopup (popup) {
@@ -37,23 +36,15 @@ function openPopupProfile() {
   openPopup(popupProfile);
 }
 
-function closePopupProfile() {
-  closePopup(popupProfile)
-}
-
 function writeProfile(e) {
   e.preventDefault();
   profileName.textContent = popupProfileInputName.value;
   profileDescription.textContent = popupProfileInputDescription.value;
-  closePopupProfile();
+  closePopup(popupProfile)
 }
 
 function openPopupCard() {
   openPopup(popupCard)
-}
-
-function closePopupCard() {
-  closePopup(popupCard);
 }
 
 function createCard (card) {
@@ -68,8 +59,7 @@ function createCard (card) {
   title.textContent = card.name;
 
   buttonDelete.addEventListener('click', deleteCard);
-  buttonCloseImagePopup.addEventListener('click', closePopupImageCard)
-  photo.addEventListener('click', openPopupImageCard);
+  photo.addEventListener('click', () => openPopupImageCard(card));
   buttonLike.addEventListener('click', toggleLike);
 
   return cardElement
@@ -86,48 +76,38 @@ function addCardWithForm(e) {
   card.name = popupCardInputName.value;
   card.link = popupCardInputLink.value;
   renderCard(card, 'bottom')
-  popupCardInputName.value = '';
-  popupCardInputLink.value = '';
-  closePopupCard();
+  formCardPopup.reset();
+  closePopup(popupCard);
 }
 function addAllCardsToPage() {
   initialCards.forEach(item => renderCard(item, 'top'));
 }
 
 function deleteCard(e) {
-  const clickElement = e.target;
-  let deleteElement = clickElement.closest('.elements__card');
-  deleteElement.remove();
+  e.target.closest('.elements__card').remove();
 }
 
 function toggleLike (e) {
   e.target.classList.toggle('elements__like_active');
 }
 
-function openPopupImageCard (e) {
-  const card = e.target.closest('.elements__card');
-  const cardTitle = card.querySelector('.elements__title').textContent;
+function openPopupImageCard (card) {
   openPopup(popupImage)
-  imagePopupImage.src = e.target.src;
-  imagePopupImage.alt = e.target.alt;
-  descriptionPopupImage.textContent = cardTitle;
+  imagePopupImage.src = card.link;
+  imagePopupImage.alt = card.name;
+  descriptionPopupImage.textContent = card.name;
 }
 
-function closePopupImageCard () {
-  imagePopupImage.src = '';
-  closePopup(popupImage);
-  descriptionPopupImage.textContent = '';
-}
-
-// События
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', addAllCardsToPage);
 // Профиль
 buttonEditProfile.addEventListener('click', openPopupProfile);
-buttonCloseProfileButton.addEventListener('click', closePopupProfile);
 formProfilePopup.addEventListener('submit', writeProfile);
 // Место
 buttonAddCard.addEventListener('click', openPopupCard);
-buttonCloseCard.addEventListener('click', closePopupCard);
 formCardPopup.addEventListener('submit', addCardWithForm);
-
+// Закрыть попап
+buttonCloseList.forEach(btn => {
+  const popup = btn.closest('.popup');
+  btn.addEventListener('click', () => closePopup(popup));
+})
