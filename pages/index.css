@@ -52,14 +52,18 @@
 @import url(../blocks/popup/__container/_content/popup__container_content_photo.css);
 @import url(../blocks/popup/__cross/popup__cross.css);
 @import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__input/_content/_name/popup__input_content_name.css);
 @import url(../blocks/popup/__input/_content/_description/popup__input_content_description.css);
 @import url(../blocks/popup/__input/_content/_place/popup__input_content_place.css);
 @import url(../blocks/popup/__input/_content/_link/popup__input_content_link.css);
+@import url(../blocks/popup/__input/_type/_error/popup__input_type_error.css);
 @import url(../blocks/popup/__photo/popup__photo.css);
 @import url(../blocks/popup/__description/popup__description.css);
 @import url(../blocks/popup/__submit/popup__submit.css);
+@import url(../blocks/popup/__submit/_inactive/popup__submit_inactive.css);
+@import url(../blocks/popup/__error/popup__error.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 
-/* Input */
-@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/profile-description-error/profile-description-error.css);
+@import url(../blocks/image-error/image-error.css);

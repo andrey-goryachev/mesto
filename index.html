@@ -50,15 +50,25 @@
           type="text"
           value=""
           placeholder="Имя"
-          aria-label="Заполнить имя">
+          aria-label="Заполнить имя"
+          minlength="2"
+          maxlength="40"
+          required
+        >
+        <span class="popup__error profile-name-error"></span>
         <input
           class="popup__input popup__input_content_description"
           name="profile-description"
           type="text"
           value=""
           placeholder="О себе"
-          aria-label="Заполнить описание">
-        <button class="popup__submit button button button_opacity_light" type="submit">Сохранить</button>
+          aria-label="Заполнить описание"
+          minlength="2"
+          maxlength="200"
+          required
+        >
+        <span class="popup__error profile-description-error"></span>
+        <button class="popup__submit button button_opacity_light" type="submit">Сохранить</button>
       </form>
     </div>
   </div>
@@ -72,13 +82,22 @@
           name="card-place"
           type="text"
           value=""
-          placeholder="Название">
+          placeholder="Название"
+          minlength="2"
+          maxlength="30"
+          required
+        >
+        <span class="popup__error card-place-error"></span>
         <input
           class="popup__input popup__input_content_link"
-          name="-image"
-          type="text"
+          name="image"
+          type="url"
           value=""
-          placeholder="Ссылка на картинку">
+          placeholder="Ссылка на картинку"
+          minlength="2"
+          required
+        >
+        <span class="popup__error image-error"></span>
         <button class="popup__submit button button button_opacity_light" type="submit">Создать</button>
       </form>
     </div>
@@ -101,5 +120,6 @@
 </div>
 <script src="./scripts/cards.js"></script>
 <script src="./scripts/index.js"></script>
+<script src="./scripts/validate.js"></script>
 </body>
 </html>
