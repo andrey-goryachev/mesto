@@ -3,14 +3,11 @@ const showInputError = (form, inputElement, errorMessage) => {
   const errorElement = form.querySelector(`.${inputElement.name}-error`);
   inputElement.classList.add('popup__input_type_error');
   errorElement.textContent = errorMessage;
-  // errorElement.classList.add('')
 }
 
 // спрятать ошибку
 const hideInputError = (form, inputElement) => {
   const errorElement = form.querySelector(`.${inputElement.name}-error`);
-  console.log('errorElement')
-  console.log(errorElement)
   inputElement.classList.remove('popup__input_type_error');
   errorElement.textContent = '';
 }
@@ -19,7 +16,6 @@ const hideInputError = (form, inputElement) => {
 const isValid = (form, inputElement) => {
   if (!inputElement.validity.valid) {
     showInputError(form, inputElement, inputElement.validationMessage);
-    console.log(inputElement.validity.valid)
   } else {
     hideInputError(form, inputElement);
   }
@@ -43,13 +39,13 @@ const toggleButtonState = (inputList, button) => {
 
 // установить слушатель изменения для всех инпутов формы,
 const setEventListenersForm = (form) => {
-  const inputLists = Array.from(form.querySelectorAll('.popup__input'))
+  const inputList = Array.from(form.querySelectorAll('.popup__input'))
   const button = form.querySelector('.popup__submit')
-  toggleButtonState(inputLists, button)
-  inputLists.forEach((input) => {
+  toggleButtonState(inputList, button)
+  inputList.forEach((input) => {
     input.addEventListener('input', () => {
       isValid(form, input)
-      toggleButtonState(inputLists, button)
+      toggleButtonState(inputList, button)
     })
   })
 }
