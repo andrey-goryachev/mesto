@@ -21,13 +21,23 @@ const cardTemplate = document.querySelector('#elements__card').content;
 // Общие
 const buttonCloseList = document.querySelectorAll('.popup__cross');
 
-
-function openPopup (popup) {
-  popup.classList.add('popup_opened');
-}
-
 function closePopup (popup) {
   popup.classList.remove('popup_opened')
+}
+
+function closePopupOverLay (popup) {
+  popup.addEventListener('click', () => {
+    closePopup(popup)
+  })
+}
+
+function openPopup (popup) {
+  const popupContainer = popup.querySelector('.popup__container')
+  popupContainer.addEventListener('click', (evt) => {
+    evt.stopPropagation()
+  })
+  popup.classList.add('popup_opened');
+  closePopupOverLay(popup)
 }
 
 function openPopupProfile() {
@@ -98,6 +108,7 @@ function openPopupImageCard (card) {
   descriptionPopupImage.textContent = card.name;
 }
 
+
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', addAllCardsToPage);
 // Профиль
@@ -111,3 +122,5 @@ buttonCloseList.forEach(btn => {
   const popup = btn.closest('.popup');
   btn.addEventListener('click', () => closePopup(popup));
 })
+
+

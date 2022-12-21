@@ -16,3 +16,7 @@
     padding: 25px 22px;
   }
 }
+
+.popup__container:hover {
+  cursor: default;
+}
