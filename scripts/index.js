@@ -26,18 +26,27 @@ function closePopup (popup) {
 }
 
 function closePopupOverLay (popup) {
-  popup.addEventListener('click', () => {
-    closePopup(popup)
-  })
-}
-
-function openPopup (popup) {
   const popupContainer = popup.querySelector('.popup__container')
   popupContainer.addEventListener('click', (evt) => {
     evt.stopPropagation()
   })
+  popup.addEventListener('click', () => {
+    closePopup(popup)
+  })
+}
+function closePopupKeyEnter (evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
+    if (openedPopup) {
+      closePopup(openedPopup)
+    }
+  }
+}
+
+function openPopup (popup) {
   popup.classList.add('popup_opened');
   closePopupOverLay(popup)
+  // closePopupKeyEnter(popup)
   enableValidation();
 }
 
@@ -112,13 +121,15 @@ function openPopupImageCard (card) {
 
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', addAllCardsToPage);
+// Закрыть поп-ап нажатием Esc
+document.addEventListener('keydown', closePopupKeyEnter)
 // Профиль
 buttonEditProfile.addEventListener('click', openPopupProfile);
 formProfilePopup.addEventListener('submit', writeProfile);
 // Место
 buttonAddCard.addEventListener('click', openPopupCard);
 formCardPopup.addEventListener('submit', addCardWithForm);
-// Закрыть попап
+// Закрыть поп-ап
 buttonCloseList.forEach(btn => {
   const popup = btn.closest('.popup');
   btn.addEventListener('click', () => closePopup(popup));
