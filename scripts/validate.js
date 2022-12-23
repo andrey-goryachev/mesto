@@ -1,23 +1,23 @@
 //показать ошибку
-const showInputError = (form, inputElement, errorMessage) => {
-  const errorElement = form.querySelector(`.${inputElement.name}-error`);
-  inputElement.classList.add('popup__input_type_error');
+const showInputError = (form, inputElement, errorMessage, settingsObject) => {
+  const errorElement = form.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add(settingsObject.inputErrorClass);
   errorElement.textContent = errorMessage;
 }
 
 // спрятать ошибку
-const hideInputError = (form, inputElement) => {
-  const errorElement = form.querySelector(`.${inputElement.name}-error`);
-  inputElement.classList.remove('popup__input_type_error');
+const hideInputError = (form, inputElement, settingsObject) => {
+  const errorElement = form.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove(settingsObject.inputErrorClass);
   errorElement.textContent = '';
 }
 
 // показать ошибку если инпут не валидный
-const isValid = (form, inputElement) => {
+const isValid = (form, inputElement, settingsObject) => {
   if (!inputElement.validity.valid) {
-    showInputError(form, inputElement, inputElement.validationMessage);
+    showInputError(form, inputElement, inputElement.validationMessage, settingsObject);
   } else {
-    hideInputError(form, inputElement);
+    hideInputError(form, inputElement, settingsObject);
   }
 }
 
@@ -29,35 +29,36 @@ const hasInvalidInput = (inputList) => {
 }
 
 // сделать кнопку неактивной, если хотя бы один инпут не валиден
-const toggleButtonState = (inputList, button) => {
+const toggleButtonState = (inputList, button, settingsObject) => {
   if (hasInvalidInput(inputList)) {
-    button.classList.add('popup__submit_inactive')
+    button.classList.add(settingsObject.inactiveButtonClass)
+    button.disabled = true
   } else {
-    button.classList.remove('popup__submit_inactive')
+    button.classList.remove(settingsObject.inactiveButtonClass)
+    button.disabled = false
   }
 }
 
 // установить слушатель изменения для всех инпутов формы,
-const setEventListenersForm = (form) => {
-  const inputList = Array.from(form.querySelectorAll('.popup__input'))
-  const button = form.querySelector('.popup__submit')
-  toggleButtonState(inputList, button)
+const setEventListenersForm = (form, settingsObject) => {
+  const inputList = Array.from(form.querySelectorAll(settingsObject.inputSelector))
+  const button = form.querySelector(settingsObject.submitButtonSelector)
+  toggleButtonState(inputList, button, settingsObject)
   inputList.forEach((input) => {
     input.addEventListener('input', () => {
-      isValid(form, input)
-      toggleButtonState(inputList, button)
+      isValid(form, input,settingsObject)
+      toggleButtonState(inputList, button, settingsObject)
     })
   })
 }
 
-// установить валидацию на каждую форму
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
+const enableValidation = (settingsObject) => {
+  const formList = Array.from(document.querySelectorAll(settingsObject.formSelector));
   formList.forEach((form) => {
-    setEventListenersForm(form);
+    setEventListenersForm(form, settingsObject);
   });
 }
 
-enableValidation();
+enableValidation(settingsObject)
 
 

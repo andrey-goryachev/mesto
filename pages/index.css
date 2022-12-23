@@ -64,6 +64,3 @@
 @import url(../blocks/popup/__submit/_inactive/popup__submit_inactive.css);
 @import url(../blocks/popup/__error/popup__error.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
-
-@import url(../blocks/profile-description-error/profile-description-error.css);
-@import url(../blocks/image-error/image-error.css);

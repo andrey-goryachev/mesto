@@ -23,31 +23,33 @@ const buttonCloseList = document.querySelectorAll('.popup__cross');
 
 function closePopup (popup) {
   popup.classList.remove('popup_opened')
+  enableValidation(settingsObject)
+  document.removeEventListener('keydown', closePopupKeyEnter)
 }
 
 function closePopupOverLay (popup) {
   const popupContainer = popup.querySelector('.popup__container')
-  popupContainer.addEventListener('click', (evt) => {
+  popupContainer.addEventListener('mousedown', (evt) => {
     evt.stopPropagation()
   })
-  popup.addEventListener('click', () => {
+  popup.addEventListener('mousedown', () => {
     closePopup(popup)
   })
 }
 function closePopupKeyEnter (evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened')
-    if (openedPopup) {
-      closePopup(openedPopup)
+    if (evt.key === 'Escape') {
+      const openedPopup = document.querySelector('.popup_opened')
+      if (openedPopup) {
+        closePopup(openedPopup)
+      }
     }
   }
-}
 
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+  enableValidation(settingsObject)
   closePopupOverLay(popup)
-  // closePopupKeyEnter(popup)
-  enableValidation();
+  document.addEventListener('keydown', closePopupKeyEnter)
 }
 
 function openPopupProfile() {
@@ -121,18 +123,20 @@ function openPopupImageCard (card) {
 
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', addAllCardsToPage);
-// Закрыть поп-ап нажатием Esc
-document.addEventListener('keydown', closePopupKeyEnter)
+
 // Профиль
 buttonEditProfile.addEventListener('click', openPopupProfile);
 formProfilePopup.addEventListener('submit', writeProfile);
+
 // Место
 buttonAddCard.addEventListener('click', openPopupCard);
 formCardPopup.addEventListener('submit', addCardWithForm);
+
 // Закрыть поп-ап
 buttonCloseList.forEach(btn => {
   const popup = btn.closest('.popup');
   btn.addEventListener('click', () => closePopup(popup));
 })
+
 
 
