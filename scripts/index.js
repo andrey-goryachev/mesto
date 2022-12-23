@@ -23,7 +23,6 @@ const buttonCloseList = document.querySelectorAll('.popup__cross');
 
 function closePopup (popup) {
   popup.classList.remove('popup_opened')
-  enableValidation(settingsObject)
   document.removeEventListener('keydown', closePopupKeyEnter)
 }
 
@@ -46,8 +45,12 @@ function closePopupKeyEnter (evt) {
   }
 
 function openPopup (popup) {
+  const form = popup.querySelector(settingsValidation.formSelector);
+  const inputList = Array.from(form.querySelectorAll(settingsValidation.inputSelector))
+  const button = form.querySelector(settingsValidation.submitButtonSelector)
+
   popup.classList.add('popup_opened');
-  enableValidation(settingsObject)
+  toggleButtonState(inputList, button, settingsValidation)
   closePopupOverLay(popup)
   document.addEventListener('keydown', closePopupKeyEnter)
 }

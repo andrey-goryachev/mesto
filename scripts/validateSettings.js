@@ -1,4 +1,4 @@
-const settingsObject = {
+const settingsValidation = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit',

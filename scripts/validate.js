@@ -59,6 +59,7 @@ const enableValidation = (settingsObject) => {
   });
 }
 
-enableValidation(settingsObject)
+
+enableValidation(settingsValidation)
 
 
