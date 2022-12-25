@@ -6,6 +6,8 @@ const profileDescription = document.querySelector('.profile__text');
 const popupProfileInputName = popupProfile.querySelector('.popup__input_content_name');
 const popupProfileInputDescription = popupProfile.querySelector('.popup__input_content_description');
 const formProfilePopup = popupProfile.querySelector('.popup__form');
+const popupProfileInputList = Array.from(formProfilePopup.querySelectorAll(settingsValidation.inputSelector));
+const buttonSubmitProfile = formProfilePopup.querySelector(settingsValidation.submitButtonSelector);
 // Место
 const popupCard = document.querySelector('.popup_content_card');
 const buttonAddCard = document.querySelector('.profile__button_function_add');
@@ -40,12 +42,6 @@ function closePopupKeyEscape(evt) {
 }
 
 function openPopup(popup) {
-  const form = popup.querySelector(settingsValidation.formSelector);
-  if (form !== null) {
-    const inputList = Array.from(form.querySelectorAll(settingsValidation.inputSelector));
-    const button = form.querySelector(settingsValidation.submitButtonSelector);
-    toggleButtonState(inputList, button, settingsValidation);
-  }
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupKeyEscape);
 }
@@ -53,6 +49,7 @@ function openPopup(popup) {
 function openPopupProfile() {
   popupProfileInputName.value = profileName.textContent;
   popupProfileInputDescription.value = profileDescription.textContent;
+  toggleButtonState(popupProfileInputList, buttonSubmitProfile, settingsValidation);
   openPopup(popupProfile);
 }
 
