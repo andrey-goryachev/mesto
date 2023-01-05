@@ -1,3 +1,6 @@
+import Card from './Card.js'
+
+
 // Профиль
 const popupProfile = document.querySelector('.popup_content_profile');
 const buttonEditProfile = document.querySelector('.profile__button_function_edit');
@@ -19,7 +22,8 @@ const cardsContainer = document.querySelector('.elements__list');
 const popupImage = document.querySelector('.popup_content_photo');
 const imagePopupImage = popupImage.querySelector('.popup__photo')
 const descriptionPopupImage = popupImage.querySelector('.popup__description')
-const cardTemplate = document.querySelector('#elements__card').content;
+// const cardTemplate = document.querySelector('#elements__card').content;
+const selectorTemplateCard = '#elements__card';
 // Общие
 const buttonCloseList = document.querySelectorAll('.popup__cross');
 
@@ -65,21 +69,7 @@ function openPopupCard() {
 }
 
 function createCard(card) {
-  const cardElement = cardTemplate.querySelector('.elements__card').cloneNode(true);
-  const photo = cardElement.querySelector('.elements__photo');
-  const title = cardElement.querySelector('.elements__title');
-  const buttonDelete = cardElement.querySelector('.elements__bin');
-  const buttonLike = cardElement.querySelector('.elements__like');
-
-  photo.src = card.link;
-  photo.alt = card.name;
-  title.textContent = card.name;
-
-  buttonDelete.addEventListener('click', deleteCard);
-  photo.addEventListener('click', () => openPopupImageCard(card));
-  buttonLike.addEventListener('click', toggleLike);
-
-  return cardElement
+  return new Card(card,selectorTemplateCard).generateCard()
 }
 
 function renderCard(card, position = 'top') {
@@ -105,15 +95,15 @@ function addAllCardsToPage() {
   initialCards.forEach(item => renderCard(item, 'top'));
 }
 
-function deleteCard(e) {
-  e.target.closest('.elements__card').remove();
-}
+// function deleteCard(e) {
+//   e.target.closest('.elements__card').remove();
+// }
+//
+// function toggleLike(e) {
+//   e.target.classList.toggle('elements__like_active');
+// }
 
-function toggleLike(e) {
-  e.target.classList.toggle('elements__like_active');
-}
-
-function openPopupImageCard(card) {
+export function openPopupImageCard(card) {
   openPopup(popupImage)
   imagePopupImage.src = card.link;
   imagePopupImage.alt = card.name;
