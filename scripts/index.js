@@ -1,5 +1,5 @@
 import Card from './Card.js'
-import {toggleButtonState} from "./validate.js";
+import {toggleButtonState, closePopup, openPopup} from "./utils.js";
 
 
 // Профиль
@@ -20,34 +20,15 @@ const popupCardInputLink = document.querySelector('.popup__input_content_link');
 const formCardPopup = popupCard.querySelector('.popup__form');
 // Карточки с фото
 const cardsContainer = document.querySelector('.elements__list');
-const popupImage = document.querySelector('.popup_content_photo');
-const imagePopupImage = popupImage.querySelector('.popup__photo')
-const descriptionPopupImage = popupImage.querySelector('.popup__description')
 const selectorTemplateCard = '#elements__card';
 // Общие
 const buttonCloseList = document.querySelectorAll('.popup__cross');
 
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupKeyEscape);
-}
 
 function closePopupOverLay(evt) {
   if (evt.target.classList.contains('popup')) {
     closePopup(evt.target);
   }
-}
-
-function closePopupKeyEscape(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  }
-}
-
-function openPopup(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupKeyEscape);
 }
 
 function openPopupProfile() {
@@ -93,13 +74,6 @@ function addCardWithForm(e) {
 
 function addAllCardsToPage() {
   initialCards.forEach(item => renderCard(item, 'top'));
-}
-
-export function openPopupImageCard(card) {
-  openPopup(popupImage)
-  imagePopupImage.src = card.link;
-  imagePopupImage.alt = card.name;
-  descriptionPopupImage.textContent = card.name;
 }
 
 // Загрузка страницы

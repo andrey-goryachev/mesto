@@ -1,4 +1,4 @@
-import {toggleButtonState} from "./validate.js";
+import {toggleButtonState} from "./utils.js";
 
 
 export default class FormValidator {
