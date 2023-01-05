@@ -1,4 +1,5 @@
 import Card from './Card.js'
+import {toggleButtonState} from "./validate.js";
 
 
 // Профиль
@@ -22,7 +23,6 @@ const cardsContainer = document.querySelector('.elements__list');
 const popupImage = document.querySelector('.popup_content_photo');
 const imagePopupImage = popupImage.querySelector('.popup__photo')
 const descriptionPopupImage = popupImage.querySelector('.popup__description')
-// const cardTemplate = document.querySelector('#elements__card').content;
 const selectorTemplateCard = '#elements__card';
 // Общие
 const buttonCloseList = document.querySelectorAll('.popup__cross');
@@ -94,14 +94,6 @@ function addCardWithForm(e) {
 function addAllCardsToPage() {
   initialCards.forEach(item => renderCard(item, 'top'));
 }
-
-// function deleteCard(e) {
-//   e.target.closest('.elements__card').remove();
-// }
-//
-// function toggleLike(e) {
-//   e.target.classList.toggle('elements__like_active');
-// }
 
 export function openPopupImageCard(card) {
   openPopup(popupImage)
