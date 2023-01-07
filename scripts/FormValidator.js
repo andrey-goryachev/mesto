@@ -1,6 +1,3 @@
-import {toggleButtonState} from "./utils.js";
-
-
 export default class FormValidator {
   constructor(settings, form) {
     this._settings = settings
@@ -32,14 +29,30 @@ export default class FormValidator {
   _setEventListeners(input) {
     input.addEventListener('input', () => {
       this._isValid(input)
-      toggleButtonState(this._inputList, this._button, this._settings)
+      this.toggleButtonState()
     })
   }
 
   enableValidation() {
-    toggleButtonState(this._inputList, this._button, this._settings)
+    this.toggleButtonState()
     this._inputList.forEach((input) => {
       this._setEventListeners(input)
     })
+  }
+
+  _hasInvalidInput() {
+    return this._inputList.some((input) => {
+      return !input.validity.valid;
+    })
+  }
+
+  toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._button.classList.add(this._settings.inactiveButtonClass)
+      this._button.disabled = true
+    } else {
+      this._button.classList.remove(this._settings.inactiveButtonClass)
+      this._button.disabled = false
+    }
   }
 }

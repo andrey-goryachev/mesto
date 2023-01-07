@@ -1,5 +1,8 @@
+import initialCards from "./cards.js";
+import settingsValidation from './validateSettings.js'
 import Card from './Card.js'
-import {toggleButtonState, closePopup, openPopup} from "./utils.js";
+import FormValidator from "./FormValidator.js";
+import {closePopup, openPopup} from "./utils.js";
 
 
 // Профиль
@@ -10,8 +13,6 @@ const profileDescription = document.querySelector('.profile__text');
 const popupProfileInputName = popupProfile.querySelector('.popup__input_content_name');
 const popupProfileInputDescription = popupProfile.querySelector('.popup__input_content_description');
 const formProfilePopup = popupProfile.querySelector('.popup__form');
-const popupProfileInputList = Array.from(formProfilePopup.querySelectorAll(settingsValidation.inputSelector));
-const buttonSubmitProfile = formProfilePopup.querySelector(settingsValidation.submitButtonSelector);
 // Место
 const popupCard = document.querySelector('.popup_content_card');
 const buttonAddCard = document.querySelector('.profile__button_function_add');
@@ -23,6 +24,9 @@ const cardsContainer = document.querySelector('.elements__list');
 const selectorTemplateCard = '#elements__card';
 // Общие
 const buttonCloseList = document.querySelectorAll('.popup__cross');
+// Валидаторы
+const validatorProfile = new FormValidator(settingsValidation, formProfilePopup)
+const validatorCard = new FormValidator(settingsValidation, formCardPopup)
 
 
 function closePopupOverLay(evt) {
@@ -34,7 +38,7 @@ function closePopupOverLay(evt) {
 function openPopupProfile() {
   popupProfileInputName.value = profileName.textContent;
   popupProfileInputDescription.value = profileDescription.textContent;
-  toggleButtonState(popupProfileInputList, buttonSubmitProfile, settingsValidation);
+  validatorProfile.toggleButtonState()
   openPopup(popupProfile);
 }
 
@@ -61,14 +65,12 @@ function renderCard(card, position = 'top') {
 function addCardWithForm(e) {
   e.preventDefault();
   const card = {};
-  const buttonSubmit = e.submitter;
 
   card.name = popupCardInputName.value;
   card.link = popupCardInputLink.value;
   renderCard(card, 'bottom');
   formCardPopup.reset();
-  buttonSubmit.classList.add(settingsValidation.inactiveButtonClass);
-  buttonSubmit.disabled = true;
+  validatorCard.toggleButtonState()
   closePopup(popupCard);
 }
 
@@ -93,4 +95,8 @@ buttonCloseList.forEach(btn => {
   popup.addEventListener('mousedown', (evt) => closePopupOverLay(evt, popup));
   btn.addEventListener('click', () => closePopup(popup));
 })
+
+// Включить валидацию
+validatorProfile.enableValidation()
+validatorCard.enableValidation()
 

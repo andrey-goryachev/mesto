@@ -10,21 +10,22 @@ export default class Card {
     return document.querySelector(this._templateSelector).content.querySelector('.elements__card').cloneNode(true);
   }
 
-  _handleDeleteCard(e) {
-    e.target.closest('.elements__card').remove();
+  _handleDeleteCard() {
+    this._cardElement.remove();
+    this._cardElement = null
   }
 
-  _handleToggleLike(e) {
-    e.target.classList.toggle('elements__like_active');
+  _handleToggleLike() {
+    this._buttonLike.classList.toggle('elements__like_active');
   }
 
   _setEventListeners() {
     const buttonDelete = this._cardElement.querySelector('.elements__bin')
-    const buttonLike = this._cardElement.querySelector('.elements__like')
+    this._buttonLike = this._cardElement.querySelector('.elements__like')
     const photo = this._cardElement.querySelector('.elements__photo');
 
-    buttonDelete.addEventListener('click', this._handleDeleteCard);
-    buttonLike.addEventListener('click', this._handleToggleLike);
+    buttonDelete.addEventListener('click', () => this._handleDeleteCard());
+    this._buttonLike.addEventListener('click', () => this._handleToggleLike());
     photo.addEventListener('click', () => openPopupImageCard(this._card));
   }
 
