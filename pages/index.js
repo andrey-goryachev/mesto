@@ -1,9 +1,9 @@
-import initialCards from "./cards.js";
-import settingsValidation from './validateSettings.js'
-import Card from './Card.js'
-import FormValidator from "./FormValidator.js";
-import {closePopup, openPopup} from "./utils.js";
-
+import initialCards from '../utils/cards.js';
+import settingsValidation from '../utils/validateSettings.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import { closePopup, openPopup } from '../utils/utils.js';
+import Section from '../components/Section.js';
 
 // Профиль
 const popupProfile = document.querySelector('.popup_content_profile');
@@ -25,9 +25,8 @@ const selectorTemplateCard = '#elements__card';
 // Общие
 const buttonCloseList = document.querySelectorAll('.popup__cross');
 // Валидаторы
-const validatorProfile = new FormValidator(settingsValidation, formProfilePopup)
-const validatorCard = new FormValidator(settingsValidation, formCardPopup)
-
+const validatorProfile = new FormValidator(settingsValidation, formProfilePopup);
+const validatorCard = new FormValidator(settingsValidation, formCardPopup);
 
 function closePopupOverLay(evt) {
   if (evt.target.classList.contains('popup')) {
@@ -38,7 +37,7 @@ function closePopupOverLay(evt) {
 function openPopupProfile() {
   popupProfileInputName.value = profileName.textContent;
   popupProfileInputDescription.value = profileDescription.textContent;
-  validatorProfile.toggleButtonState()
+  validatorProfile.toggleButtonState();
   openPopup(popupProfile);
 }
 
@@ -54,7 +53,7 @@ function openPopupCard() {
 }
 
 function createCard(card) {
-  return new Card(card,selectorTemplateCard).generateCard()
+  return new Card(card, selectorTemplateCard).generateCard();
 }
 
 function renderCard(card, position = 'top') {
@@ -70,12 +69,12 @@ function addCardWithForm(e) {
   card.link = popupCardInputLink.value;
   renderCard(card, 'bottom');
   formCardPopup.reset();
-  validatorCard.toggleButtonState()
+  validatorCard.toggleButtonState();
   closePopup(popupCard);
 }
 
 function addAllCardsToPage() {
-  initialCards.forEach(item => renderCard(item, 'top'));
+  initialCards.forEach((item) => renderCard(item, 'top'));
 }
 
 // Загрузка страницы
@@ -90,13 +89,12 @@ buttonAddCard.addEventListener('click', openPopupCard);
 formCardPopup.addEventListener('submit', addCardWithForm);
 
 // Закрыть поп-ап на крестик и по клику на пустом месте
-buttonCloseList.forEach(btn => {
+buttonCloseList.forEach((btn) => {
   const popup = btn.closest('.popup');
   popup.addEventListener('mousedown', (evt) => closePopupOverLay(evt, popup));
   btn.addEventListener('click', () => closePopup(popup));
-})
+});
 
 // Включить валидацию
-validatorProfile.enableValidation()
-validatorCard.enableValidation()
-
+validatorProfile.enableValidation();
+validatorCard.enableValidation();
