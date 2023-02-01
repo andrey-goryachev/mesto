@@ -52,33 +52,37 @@ function openPopupCard() {
   openPopup(popupCard);
 }
 
-function createCard(card) {
-  return new Card(card, selectorTemplateCard).generateCard();
+const renderCard = (card) => {
+  const cardElement = new Card(card, selectorTemplateCard).generateCard();
+  cardList.addItem(cardElement);
 }
 
-function renderCard(card, position = 'top') {
-  if (position === 'top') cardsContainer.append(createCard(card));
-  if (position === 'bottom') cardsContainer.prepend(createCard(card));
-}
+const cardList = new Section(
+  {
+    items: initialCards,
+    renderer: renderCard,
+  },
+  '.elements__list'
+);
 
 function addCardWithForm(e) {
   e.preventDefault();
   const card = {};
-
   card.name = popupCardInputName.value;
   card.link = popupCardInputLink.value;
-  renderCard(card, 'bottom');
+
+  new Section({
+    items: [card],
+    renderer: renderCard,
+  }, '.elements__list').renderItem()
   formCardPopup.reset();
   validatorCard.toggleButtonState();
   closePopup(popupCard);
 }
 
-function addAllCardsToPage() {
-  initialCards.forEach((item) => renderCard(item, 'top'));
-}
-
 // Загрузка страницы
-document.addEventListener('DOMContentLoaded', addAllCardsToPage);
+// document.addEventListener('DOMContentLoaded', addAllCardsToPage);
+document.addEventListener('DOMContentLoaded', cardList.renderItem());
 
 // Профиль
 buttonEditProfile.addEventListener('click', openPopupProfile);
