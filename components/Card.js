@@ -1,4 +1,4 @@
-import {openPopupImageCard} from '../utils/utils.js'
+// import {openPopupImageCard} from '../utils/utils.js'
 
 export default class Card {
   constructor(card, templateSelector) {
@@ -24,9 +24,14 @@ export default class Card {
     this._buttonLike = this._cardElement.querySelector('.elements__like')
     const photo = this._cardElement.querySelector('.elements__photo');
 
-    buttonDelete.addEventListener('click', () => this._handleDeleteCard());
-    this._buttonLike.addEventListener('click', () => this._handleToggleLike());
-    photo.addEventListener('click', () => openPopupImageCard(this._card));
+    buttonDelete.addEventListener('click', (e) => {
+      e.stopPropagation()
+      this._handleDeleteCard()
+    });
+    this._buttonLike.addEventListener('click', (e) => {
+      e.stopPropagation()
+      this._handleToggleLike()
+    });
   }
 
   generateCard() {

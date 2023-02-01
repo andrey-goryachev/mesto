@@ -2,8 +2,10 @@ import initialCards from '../utils/cards.js';
 import settingsValidation from '../utils/validateSettings.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
-import { closePopup, openPopup } from '../utils/utils.js';
+// import { closePopup, openPopup } from '../utils/utils.js';
 import Section from '../components/Section.js';
+// import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 
 // Профиль
 const popupProfile = document.querySelector('.popup_content_profile');
@@ -28,34 +30,40 @@ const buttonCloseList = document.querySelectorAll('.popup__cross');
 const validatorProfile = new FormValidator(settingsValidation, formProfilePopup);
 const validatorCard = new FormValidator(settingsValidation, formCardPopup);
 
-function closePopupOverLay(evt) {
-  if (evt.target.classList.contains('popup')) {
-    closePopup(evt.target);
-  }
-}
+// function closePopupOverLay(evt) {
+//   if (evt.target.classList.contains('popup')) {
+//     closePopup(evt.target);
+//   }
+// }
 
-function openPopupProfile() {
-  popupProfileInputName.value = profileName.textContent;
-  popupProfileInputDescription.value = profileDescription.textContent;
-  validatorProfile.toggleButtonState();
-  openPopup(popupProfile);
-}
+// function openPopupProfile() {
+//   popupProfileInputName.value = profileName.textContent;
+//   popupProfileInputDescription.value = profileDescription.textContent;
+//   validatorProfile.toggleButtonState();
+//   openPopup(popupProfile);
+// }
 
 function writeProfile(e) {
   e.preventDefault();
   profileName.textContent = popupProfileInputName.value;
   profileDescription.textContent = popupProfileInputDescription.value;
-  closePopup(popupProfile);
+  // closePopup(popupProfile);
 }
 
-function openPopupCard() {
-  openPopup(popupCard);
-}
+// function openPopupCard() {
+//   openPopup(popupCard);
+// }
+
+// const popupWithImage = new Popup('.popup_content_photo');
+// popupWithImage.setEventListeners();
 
 const renderCard = (card) => {
   const cardElement = new Card(card, selectorTemplateCard).generateCard();
+  const popupWithImage = new PopupWithImage('.popup_content_photo', card);
+  popupWithImage.setEventListeners()
+  cardElement.addEventListener("click", () => popupWithImage.open())
   cardList.addItem(cardElement);
-}
+};
 
 const cardList = new Section(
   {
@@ -71,33 +79,39 @@ function addCardWithForm(e) {
   card.name = popupCardInputName.value;
   card.link = popupCardInputLink.value;
 
-  new Section({
-    items: [card],
-    renderer: renderCard,
-  }, '.elements__list').renderItem()
+  new Section(
+    {
+      items: [card],
+      renderer: renderCard,
+    },
+    '.elements__list'
+  ).renderItem();
   formCardPopup.reset();
   validatorCard.toggleButtonState();
-  closePopup(popupCard);
+  // closePopup(popupCard);
 }
 
 // Загрузка страницы
 // document.addEventListener('DOMContentLoaded', addAllCardsToPage);
-document.addEventListener('DOMContentLoaded', cardList.renderItem());
+document.addEventListener('DOMContentLoaded', () => {
+  cardList.renderItem();
+});
 
 // Профиль
-buttonEditProfile.addEventListener('click', openPopupProfile);
-formProfilePopup.addEventListener('submit', writeProfile);
+// buttonEditProfile.addEventListener('click', openPopupProfile);
+// formProfilePopup.addEventListener('submit', writeProfile);
 
 // Место
-buttonAddCard.addEventListener('click', openPopupCard);
-formCardPopup.addEventListener('submit', addCardWithForm);
+// buttonAddCard.addEventListener('click', () => {
+//   popupWithImage.open()});
+// formCardPopup.addEventListener('submit', addCardWithForm);
 
 // Закрыть поп-ап на крестик и по клику на пустом месте
-buttonCloseList.forEach((btn) => {
-  const popup = btn.closest('.popup');
-  popup.addEventListener('mousedown', (evt) => closePopupOverLay(evt, popup));
-  btn.addEventListener('click', () => closePopup(popup));
-});
+// buttonCloseList.forEach((btn) => {
+//   const popup = btn.closest('.popup');
+//   popup.addEventListener('mousedown', (evt) => closePopupOverLay(evt, popup));
+//   btn.addEventListener('click', () => closePopup(popup));
+// });
 
 // Включить валидацию
 validatorProfile.enableValidation();
