@@ -9,6 +9,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from "../components/UserInfo.js";
 import Popup from "../components/Popup.js";
+import './index.css'
 
 // Профиль
 const popupProfile = document.querySelector('.popup_content_profile');

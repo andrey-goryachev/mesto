@@ -1,4 +1,3 @@
-// import {openPopupImageCard} from '../utils/utils.js'
 
 export default class Card {
   constructor(card, templateSelector, handleCardClick) {
