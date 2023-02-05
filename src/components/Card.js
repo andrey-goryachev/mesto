@@ -22,7 +22,6 @@ export default class Card {
   _setEventListeners() {
     this._buttonDelete = this._cardElement.querySelector('.elements__bin')
     this._buttonLike = this._cardElement.querySelector('.elements__like')
-    const photo = this._cardElement.querySelector('.elements__photo');
 
     this._cardElement.addEventListener('click', () => {
       this._handleCardClick(this._card)
