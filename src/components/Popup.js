@@ -4,10 +4,11 @@ export default class Popup {
     this._popup = document.querySelector(this._selector);
     this._classNamePopupOpened = 'popup_opened';
     this._buttonClose = this._popup.querySelector('.popup__cross');
+    this._keyEsc = 'Escape'
   }
 
   _handleEscClose = (evt) => {
-    if (evt.key === 'Escape') {
+    if (evt.key === this._keyEsc) {
       this.close();
     }
   }

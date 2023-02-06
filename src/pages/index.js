@@ -1,5 +1,3 @@
-import initialCards from '../utils/cards.js';
-import settingsValidation from '../utils/validateSettings.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
@@ -8,6 +6,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from "../components/UserInfo.js";
 import './index.css'
 import {
+  initialCards,
   buttonEditProfile,
   profileName,
   profileDescription,
@@ -16,7 +15,12 @@ import {
   formProfilePopup,
   buttonAddCard,
   formCardPopup,
-  selectorTemplateCard
+  selectorTemplateCard,
+  selectorPopupContentPhoto,
+  selectorElementsList,
+  selectorPopupProfile,
+  selectorPopupCard,
+  settingsValidation
 } from '../utils/constants.js'
 
 
@@ -26,7 +30,7 @@ const validatorCard = new FormValidator(settingsValidation, formCardPopup);
 
 // Открыть попап фото
 const openPopupWithImage = (card) => {
-  const popup = new PopupWithImage('.popup_content_photo', card);
+  const popup = new PopupWithImage(selectorPopupContentPhoto, card);
   popup.setEventListeners()
   popup.open()
 }
@@ -43,7 +47,7 @@ const cardList = new Section(
     items: initialCards,
     renderer: renderCard,
   },
-  '.elements__list'
+  selectorElementsList
 );
 
 // Создать класс профиля
@@ -63,7 +67,7 @@ const fillProfileFormFields = () => {
 }
 
 // Создать попап-форму для редактирования профиля и включить события
-const profilePopup = new PopupWithForm('.popup_content_profile', writeProfile);
+const profilePopup = new PopupWithForm(selectorPopupProfile, writeProfile);
 profilePopup.setEventListeners()
 
 // Создать и вставить карточку в разметку
@@ -72,17 +76,11 @@ const writeCard = (e, card) => {
   const formatCard = {}
   formatCard.name = card.place
   formatCard.link = card.image
-  new Section(
-    {
-      items: [formatCard],
-      renderer: renderCard,
-    },
-    '.elements__list'
-  ).renderItem();
+  renderCard(formatCard)
 }
 
 // Создать попап-форму добавления карточки и включить события
-const cardPopup = new PopupWithForm('.popup_content_card', writeCard)
+const cardPopup = new PopupWithForm(selectorPopupCard, writeCard)
 cardPopup.setEventListeners()
 
 // Загрузка страницы
