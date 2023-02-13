@@ -19,9 +19,11 @@
 .elements__card{align-items:center;background-color:#fff;border-radius:10px;display:flex;flex-wrap:wrap;position:relative}
 .elements__photo{border-top-left-radius:10px;border-top-right-radius:10px;display:block;flex:1;height:282px;min-width:282px;-o-object-fit:cover;object-fit:cover}.elements__photo:hover{cursor:pointer}
 .elements__title{box-sizing:border-box;color:#000;font-size:24px;font-style:normal;font-weight:900;line-height:29px;margin:0;overflow:hidden;padding:26px 0 24px 21px;text-overflow:ellipsis;white-space:nowrap;width:235px}
-.elements__like{background-color:transparent;background-image:url(87ed371465c7a6a1cd01.svg);border:none;box-sizing:border-box;height:19px;margin:0 20px 0 auto;padding:0;width:22px}
+.elements__like{background-color:transparent;background-image:url(87ed371465c7a6a1cd01.svg);border:none;box-sizing:border-box;height:19px;margin:0;padding:0;width:22px}
 .elements__like_active{background-image:url(fe17a515669479b1e649.svg)}
 .elements__bin{background-color:transparent;background:url(823b0cf1b0b7e9cb7cad.svg);border:none;height:19px;margin:0;padding:0;position:absolute;right:20px;top:20px;width:18px}
+.elements__likes-counter{color:#000;display:block;font-size:13px;font-style:normal;font-weight:400;line-height:16px;margin:0;padding:0;text-align:center}
+.elements__like-info{border:none;box-sizing:border-box;height:35px;margin:0 20px 0 auto;padding:0;width:22px}
 .footer{box-sizing:border-box;padding-bottom:60px}@media screen and (max-width:920px){.footer{margin-left:auto;margin-right:auto;max-width:88%}}@media screen and (max-width:425px){.footer{max-width:282px;padding-bottom:33px}}
 .footer__text{color:#545454;font-size:18px;font-style:normal;font-weight:400;line-height:22px;margin:0;padding:0}@media screen and (max-width:920px){.footer__text{font-size:16px;line-height:19px}}@media screen and (max-width:425px){.footer__text{font-size:14px;line-height:17px}}
 .button{transition:opacity .4s ease}.button:hover{cursor:pointer}.button:focus-visible{outline:none}
@@ -47,4 +49,8 @@
 .popup__submit_inactive{background-color:#fff;border:1px solid #e5e5e5;color:#e5e5e5}.popup__submit_inactive:hover{cursor:default}
 .popup__error{box-sizing:border-box;color:red;display:block;font-size:12px;font-style:normal;font-weight:400;line-height:15px;min-height:35px;padding-top:5px}
 .popup_opened{opacity:1;visibility:visible}.popup_opened:hover{cursor:pointer}
+
+.popup__container_content_delete-card{min-height:auto}
+.popup__submit_content_delete-card{margin-top:0}
+.popup__title_content_delete-card{margin-bottom:33px}
 
