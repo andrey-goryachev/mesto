@@ -1,14 +1,15 @@
 export default class Api {
   constructor(options) {
-    this._token = options.token;
+    // this._token = options.token;
     this._cohortId = options.cohortId;
+    this._headers = {authorization: options.token}
+    this._urlGetProfile = `https://nomoreparties.co/v1/${this._cohortId}/users/me`
+    this._urlGetCards = `https://nomoreparties.co/v1/${this._cohortId}/cards`
   }
 
-  getProfile() {
-    return fetch(`https://nomoreparties.co/v1/${this._cohortId}/users/me`, {
-      headers: {
-        authorization: this._token
-      }
+  _requestServer(url) {
+    return fetch(url, {
+      headers: this._headers
     })
       .then((res) => {
         if (res.ok) {
@@ -23,8 +24,12 @@ export default class Api {
       .catch(err => console.log(err))
   }
 
+  getProfile() {
+    return this._requestServer(this._urlGetProfile)
+  }
+
   getInitialCards() {
-    // ...
+    return this._requestServer(this._urlGetCards)
   }
 
   setProfile() {

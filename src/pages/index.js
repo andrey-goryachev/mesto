@@ -7,7 +7,7 @@ import UserInfo from "../components/UserInfo.js";
 import Api from '../components/Api.js'
 import './index.css'
 import {
-  initialCards,
+  // initialCards,
   buttonEditProfile,
   profileName,
   profileDescription,
@@ -27,6 +27,9 @@ import {
 } from '../utils/constants.js'
 
 
+// Создать класс Апи
+const api = new Api(apiOptions)
+
 // Валидаторы
 const validatorProfile = new FormValidator(settingsValidation, formProfilePopup);
 const validatorCard = new FormValidator(settingsValidation, formCardPopup);
@@ -38,20 +41,35 @@ const openPopupWithImage = (card) => {
   popup.open()
 }
 
-// Создать карточку и добавить в список
+
+
 const renderCard = (card) => {
   const cardElement = new Card(card, selectorTemplateCard, openPopupWithImage).generateCard();
   cardList.addItem(cardElement);
 };
 
-// Вставить много карточек в разметку
 const cardList = new Section(
   {
-    items: initialCards,
+    items: api.getInitialCards().then(res => res),
     renderer: renderCard,
   },
   selectorElementsList
 );
+
+// Создать карточку и добавить в список
+// const renderCard = (card) => {
+//   const cardElement = new Card(card, selectorTemplateCard, openPopupWithImage).generateCard();
+//   cardList.addItem(cardElement);
+// };
+//
+// // Вставить много карточек в разметку
+// const cardList = new Section(
+//   {
+//     items: cards,
+//     renderer: renderCard,
+//   },
+//   selectorElementsList
+// );
 
 // Создать класс профиля
 const user = new UserInfo({
@@ -77,6 +95,7 @@ const fillProfileFormFields = () => {
 const profilePopup = new PopupWithForm(selectorPopupProfile, writeProfile);
 profilePopup.setEventListeners()
 
+
 // Создать и вставить карточку в разметку
 const writeCard = (e, card) => {
   e.preventDefault()
@@ -90,11 +109,10 @@ const writeCard = (e, card) => {
 const cardPopup = new PopupWithForm(selectorPopupCard, writeCard)
 cardPopup.setEventListeners()
 
-// Создать класс Апи
-const api = new Api(apiOptions)
 
 const recordProfile = () => {
   api.getProfile().then(res => {
+    console.log(res)
     user.setUserInfo({name: res.name, info: res.about})
     user.setUserAvatar(res.avatar)
   })
@@ -103,7 +121,7 @@ const recordProfile = () => {
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', () => {
   recordProfile();
-  cardList.renderItem();
+  cardList.renderItem()
 });
 
 // Открыть попап-форму редактирования профиля при нажатии кнопки
