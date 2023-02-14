@@ -4,6 +4,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from "../components/UserInfo.js";
+import Api from '../components/Api.js'
 import './index.css'
 import {
   initialCards,
@@ -20,7 +21,9 @@ import {
   selectorElementsList,
   selectorPopupProfile,
   selectorPopupCard,
-  settingsValidation
+  settingsValidation,
+  apiOptions,
+  avatar
 } from '../utils/constants.js'
 
 
@@ -51,7 +54,11 @@ const cardList = new Section(
 );
 
 // Создать класс профиля
-const user = new UserInfo({selectorName: profileName, selectorInfo: profileDescription})
+const user = new UserInfo({
+  name: profileName,
+  info: profileDescription,
+  avatar: avatar
+})
 
 // Записать данные из формы в класс профиля
 const writeProfile = (e, {name, description}) => {
@@ -83,8 +90,19 @@ const writeCard = (e, card) => {
 const cardPopup = new PopupWithForm(selectorPopupCard, writeCard)
 cardPopup.setEventListeners()
 
+// Создать класс Апи
+const api = new Api(apiOptions)
+
+const recordProfile = () => {
+  api.getProfile().then(res => {
+    user.setUserInfo({name: res.name, info: res.about})
+    user.setUserAvatar(res.avatar)
+  })
+}
+
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', () => {
+  recordProfile();
   cardList.renderItem();
 });
 

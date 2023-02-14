@@ -41,6 +41,7 @@ const formCardPopup = popupCard.querySelector('.popup__form');
 const selectorTemplateCard = '#elements__card';
 const selectorPopupContentPhoto = '.popup_content_photo';
 const selectorElementsList = '.elements__list';
+const avatar = document.querySelector('.profile__avatar')
 
 const settingsValidation = {
   formSelector: '.popup__form',
@@ -49,6 +50,11 @@ const settingsValidation = {
   inactiveButtonClass: 'popup__submit_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
+}
+
+const apiOptions = {
+  cohortId: 'cohort-60',
+  token: '18e4741a-6c44-4105-91a3-2c8e1e3592b8'
 }
 
 
@@ -67,5 +73,7 @@ export {
   selectorElementsList,
   selectorPopupProfile,
   selectorPopupCard,
-  settingsValidation
+  settingsValidation,
+  apiOptions,
+  avatar
 }
