@@ -1,16 +1,20 @@
-
 export default class Card {
-  constructor(card, templateSelector, handleCardClick) {
+  constructor(card, templateSelector, handleCardClick, handleDeleteCard) {
     this._card = card;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick
+    this._handleDeleteCard = handleDeleteCard
   }
 
   _getCardElement() {
     return document.querySelector(this._templateSelector).content.querySelector('.elements__card').cloneNode(true);
   }
 
-  _handleDeleteCard() {
+  // _handleDeleteCard() {
+  //   this._cardElement.remove();
+  //   this._cardElement = null
+  // }
+  deleteCard() {
     this._cardElement.remove();
     this._cardElement = null
   }
@@ -30,7 +34,12 @@ export default class Card {
     this._buttonDelete.addEventListener('click', (e) => {
       e.stopPropagation()
       this._handleDeleteCard()
+      // this._cardElement.remove();
+      // this._cardElement = null
+
+      // this._deleteCard()
     });
+
     this._buttonLike.addEventListener('click', (e) => {
       e.stopPropagation()
       this._handleToggleLike()

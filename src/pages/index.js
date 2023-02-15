@@ -23,12 +23,21 @@ import {
   selectorPopupCard,
   settingsValidation,
   apiOptions,
-  avatar
+  avatar,
+  selectorPopupWithConfirmation
 } from '../utils/constants.js'
+import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
 
 // Создать класс Апи
 const api = new Api(apiOptions)
+
+const deleteCardOnServer = () => {
+  // запустить апи.удалить карточку
+}
+
+const popupWithConfirmation = new PopupWithConfirmation(selectorPopupWithConfirmation, deleteCardOnServer)
+popupWithConfirmation.setEventListeners()
 
 // Валидаторы
 const validatorProfile = new FormValidator(settingsValidation, formProfilePopup);
@@ -41,9 +50,13 @@ const openPopupWithImage = (card) => {
   popup.open()
 }
 
+const handleDeleteCard = () => {
+  popupWithConfirmation.open()
+}
+
 // Создать карточку и добавить в список
 const renderCard = (card) => {
-  const cardElement = new Card(card, selectorTemplateCard, openPopupWithImage).generateCard();
+  const cardElement = new Card(card, selectorTemplateCard, openPopupWithImage, handleDeleteCard).generateCard();
   cardList.addItem(cardElement);
 };
 
