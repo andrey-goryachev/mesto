@@ -81,7 +81,11 @@ const user = new UserInfo({
 // Записать данные из формы в класс профиля
 const writeProfile = (e, {name, description}) => {
   e.preventDefault();
-  user.setUserInfo({name: name, info: description})
+  api.setProfile({name, about: description})
+    .then((res) => {
+      user.setUserInfo({name: res.name, info: res.about})
+    })
+    .catch(err => console.log(err))
 }
 
 // Заполнить форму данными из полей профиля
@@ -111,11 +115,13 @@ cardPopup.setEventListeners()
 
 
 const recordProfile = () => {
-  api.getProfile().then(res => {
-    console.log(res)
-    user.setUserInfo({name: res.name, info: res.about})
-    user.setUserAvatar(res.avatar)
-  })
+  api.getProfile()
+    .then(res => {
+      console.log(res)
+      user.setUserInfo({name: res.name, info: res.about})
+      user.setUserAvatar(res.avatar)
+    })
+    .catch(err => console.log(err))
 }
 
 // Загрузка страницы

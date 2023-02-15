@@ -6,10 +6,6 @@ export default class Section {
   }
 
   renderItem() {
-    // console.log(this._items)
-    // this._items.forEach(item => {
-    //   this._renderer(item)
-    // })
     this._items.then((items) => {
       return items.map((item) => {
         this._renderer(item)
