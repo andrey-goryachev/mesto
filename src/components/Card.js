@@ -41,12 +41,14 @@ export default class Card {
     this._cardElement = this._getCardElement()
     this._photo = this._cardElement.querySelector('.elements__photo');
     this._title = this._cardElement.querySelector('.elements__title');
+    this._likesCounter = this._cardElement.querySelector('.elements__likes-counter')
 
     this._setEventListeners()
 
     this._photo.src = this._card.link;
     this._photo.alt = this._card.name;
     this._title.textContent = this._card.name;
+    this._likesCounter.textContent = this._card.likes.length;
 
     return this._cardElement
   }
