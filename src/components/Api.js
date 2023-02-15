@@ -7,6 +7,7 @@ export default class Api {
     this._urlGetProfile = `https://nomoreparties.co/v1/${this._cohortId}/users/me`
     this._urlGetCards = `https://nomoreparties.co/v1/${this._cohortId}/cards`
     this._urlSetProfile = `https://mesto.nomoreparties.co/v1/${this._cohortId}/users/me`
+    this._urlAddCard = `https://mesto.nomoreparties.co/v1/${this._cohortId}/cards`
   }
 
   _requestServer(url, method, dataObject) {
@@ -53,8 +54,8 @@ export default class Api {
     return this._requestServer(this._urlSetProfile, 'PATCH', userObject)
   }
 
-  addCard() {
-
+  addCard(cardObject) {
+    return this._requestServer(this._urlAddCard, 'POST', cardObject)
   }
 
   getLikesCount() {

@@ -41,12 +41,12 @@ const openPopupWithImage = (card) => {
   popup.open()
 }
 
-
-
+// Создать карточку и добавить в список
 const renderCard = (card) => {
   const cardElement = new Card(card, selectorTemplateCard, openPopupWithImage).generateCard();
   cardList.addItem(cardElement);
 };
+
 
 const cardList = new Section(
   {
@@ -56,12 +56,7 @@ const cardList = new Section(
   selectorElementsList
 );
 
-// Создать карточку и добавить в список
-// const renderCard = (card) => {
-//   const cardElement = new Card(card, selectorTemplateCard, openPopupWithImage).generateCard();
-//   cardList.addItem(cardElement);
-// };
-//
+
 // // Вставить много карточек в разметку
 // const cardList = new Section(
 //   {
@@ -106,7 +101,7 @@ const writeCard = (e, card) => {
   const formatCard = {}
   formatCard.name = card.place
   formatCard.link = card.image
-  renderCard(formatCard)
+  api.addCard(formatCard).then(res => renderCard(formatCard))
 }
 
 // Создать попап-форму добавления карточки и включить события
