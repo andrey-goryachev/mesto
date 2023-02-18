@@ -3,21 +3,27 @@ export default class UserInfo {
     this._name = name;
     this._info = info;
     this._avatar = avatar;
+    this._id = '';
   }
 
-  getUserInfo() {
+  getInfo() {
     return {
       name: this._name.textContent,
-      info: this._info.textContent
+      info: this._info.textContent,
+      id: this._id
     }
   }
 
-  setUserInfo({name, info}) {
+  setInfo({name, info}) {
     this._name.textContent = name
     this._info.textContent = info
   }
 
-  setUserAvatar(link) {
+  setAvatar(link) {
     this._avatar.src = link
+  }
+
+  setId(id) {
+    this._id = id
   }
 }

@@ -8,11 +8,18 @@ export default class PopupWithConfirmation extends Popup{
     this._deleteCardOnServer = deleteCardOnServer
   }
 
-  setEventListeners() {
-    super.setEventListeners();
-    this._buttonConfirm.addEventListener('click', () => {
-      console.log('click button confirm')
-      this._deleteCardOnServer()
-    })
+  _deleteElement = () => {
+    this._deleteCardOnServer(this._elementForDelete)
+  }
+
+  open(elementForDelete) {
+    super.open();
+    this._elementForDelete = elementForDelete
+    this._buttonConfirm.addEventListener('click', this._deleteElement)
+  }
+
+  close() {
+    super.close();
+    this._buttonConfirm.removeEventListener('click', this._deleteElement)
   }
 }

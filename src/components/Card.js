@@ -1,9 +1,12 @@
 export default class Card {
-  constructor(card, templateSelector, handleCardClick, handleDeleteCard) {
+  constructor(card, templateSelector, handleCardClick, handleDeleteCard, isOwner) {
     this._card = card;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick
     this._handleDeleteCard = handleDeleteCard
+    // this._userId = userId
+    // this._cardUserId = this._card.owner._id
+    this._isOwner = isOwner
   }
 
   _getCardElement() {
@@ -33,7 +36,9 @@ export default class Card {
 
     this._buttonDelete.addEventListener('click', (e) => {
       e.stopPropagation()
-      this._handleDeleteCard()
+      this._handleDeleteCard(e)
+
+
       // this._cardElement.remove();
       // this._cardElement = null
 
@@ -51,6 +56,8 @@ export default class Card {
     this._photo = this._cardElement.querySelector('.elements__photo');
     this._title = this._cardElement.querySelector('.elements__title');
     this._likesCounter = this._cardElement.querySelector('.elements__likes-counter')
+    this._bin = this._cardElement.querySelector('.elements__bin')
+    // this._id = this._card._id
 
     this._setEventListeners()
 
@@ -58,6 +65,16 @@ export default class Card {
     this._photo.alt = this._card.name;
     this._title.textContent = this._card.name;
     this._likesCounter.textContent = this._card.likes.length;
+
+    this._cardElement.id = this._card._id
+
+
+    console.log(this._isOwner)
+    // console.log(this._cardUserId)
+    // console.log(this._userId)
+    if (this._isOwner) {
+      this._bin.classList.add('elements__bin_active')
+    }
 
     return this._cardElement
   }

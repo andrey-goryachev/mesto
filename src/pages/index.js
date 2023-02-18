@@ -24,7 +24,9 @@ import {
   settingsValidation,
   apiOptions,
   avatar,
-  selectorPopupWithConfirmation
+  selectorPopupWithConfirmation,
+  selectorElementBinActive,
+  selectorElementBin
 } from '../utils/constants.js'
 import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
@@ -32,8 +34,22 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation";
 // Создать класс Апи
 const api = new Api(apiOptions)
 
-const deleteCardOnServer = () => {
-  // запустить апи.удалить карточку
+const deleteCardOnServer = (deleteElement) => {
+  console.log('deleteCardOnServer')
+  console.log(deleteElement)
+  api.deleteCard(deleteElement)
+    .then((res) => {
+      if (res.message === 'Пост удалён') {
+        return res
+      }
+    })
+    .then((res) => {
+      console.log(res)
+      popupWithConfirmation.close()
+      // после положительного ответа удали карточку из HTML
+      deleteElement.remove()
+      deleteElement = null
+    })
 }
 
 const popupWithConfirmation = new PopupWithConfirmation(selectorPopupWithConfirmation, deleteCardOnServer)
@@ -50,13 +66,18 @@ const openPopupWithImage = (card) => {
   popup.open()
 }
 
-const handleDeleteCard = () => {
-  popupWithConfirmation.open()
+const handleDeleteCard = (e) => {
+  let deleteElement = e.target.closest('.elements__card');
+  console.log('handleDeleteCard')
+  console.log(deleteElement)
+  popupWithConfirmation.open(deleteElement);
 }
 
 // Создать карточку и добавить в список
 const renderCard = (card) => {
-  const cardElement = new Card(card, selectorTemplateCard, openPopupWithImage, handleDeleteCard).generateCard();
+  const userId = user.getInfo().id
+  let isOwner = (card.owner._id === userId) ? true : false;
+  const cardElement = new Card(card, selectorTemplateCard, openPopupWithImage, handleDeleteCard, isOwner).generateCard();
   cardList.addItem(cardElement);
 };
 
@@ -68,16 +89,6 @@ const cardList = new Section(
   },
   selectorElementsList
 );
-
-
-// // Вставить много карточек в разметку
-// const cardList = new Section(
-//   {
-//     items: cards,
-//     renderer: renderCard,
-//   },
-//   selectorElementsList
-// );
 
 // Создать класс профиля
 const user = new UserInfo({
@@ -91,14 +102,14 @@ const writeProfile = (e, {name, description}) => {
   e.preventDefault();
   api.setProfile({name, about: description})
     .then((res) => {
-      user.setUserInfo({name: res.name, info: res.about})
+      user.setInfo({name: res.name, info: res.about})
     })
     .catch(err => console.log(err))
 }
 
 // Заполнить форму данными из полей профиля
 const fillProfileFormFields = () => {
-  const userInfo = user.getUserInfo()
+  const userInfo = user.getInfo()
   popupProfileInputName.value = userInfo.name;
   popupProfileInputDescription.value = userInfo.info;
 }
@@ -114,7 +125,14 @@ const writeCard = (e, card) => {
   const formatCard = {}
   formatCard.name = card.place
   formatCard.link = card.image
-  api.addCard(formatCard).then(res => renderCard(formatCard))
+  api.addCard(formatCard)
+    .then((res) => {
+      console.log(res)
+      renderCard(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 // Создать попап-форму добавления карточки и включить события
@@ -122,19 +140,20 @@ const cardPopup = new PopupWithForm(selectorPopupCard, writeCard)
 cardPopup.setEventListeners()
 
 
-const recordProfile = () => {
+const getProfile = () => {
   api.getProfile()
     .then(res => {
       console.log(res)
-      user.setUserInfo({name: res.name, info: res.about})
-      user.setUserAvatar(res.avatar)
+      user.setInfo({name: res.name, info: res.about})
+      user.setAvatar(res.avatar)
+      user.setId(res._id)
     })
     .catch(err => console.log(err))
 }
 
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', () => {
-  recordProfile();
+  getProfile();
   cardList.renderItem()
 });
 

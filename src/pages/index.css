@@ -32,6 +32,7 @@
 @import url(../blocks/elements/__like/elements__like.css);
 @import url(../blocks/elements/__like/_active/elements__like_active.css);
 @import url(../blocks/elements/__bin/elements__bin.css);
+@import url(../blocks/elements/__bin/_active/elements__bin_active.css);
 @import url(../blocks/elements/__likes-counter/elements__likes-counter.css);
 @import url(../blocks/elements/__like-info/elements__like-info.css);
 
