@@ -1,14 +1,15 @@
 export default class Api {
   constructor(options) {
-    // this._token = options.token;
-    this._options = options;
-    this._cohortId = options.cohortId;
+    // this._options = options;
+    this._token = options.token
     this._headers = {authorization: options.token}
-    this._urlGetProfile = `https://nomoreparties.co/v1/${this._cohortId}/users/me`
-    this._urlGetCards = `https://nomoreparties.co/v1/${this._cohortId}/cards`
-    this._urlSetProfile = `https://mesto.nomoreparties.co/v1/${this._cohortId}/users/me`
-    this._urlAddCard = `https://mesto.nomoreparties.co/v1/${this._cohortId}/cards`
+    this._urlBase = options.urlBase
 
+    this._urlGetProfile = `${this._urlBase}/users/me`
+    this._urlGetCards = `${this._urlBase}/cards`
+    this._urlSetProfile = `${this._urlBase}/users/me`
+    this._urlAddCard = `${this._urlBase}/cards`
+    
   }
 
   _requestServer(url, method, dataObject) {
@@ -16,13 +17,13 @@ export default class Api {
     if (method === 'GET') {
       options = {
         method: method,
-          headers: {authorization: this._options.token}
+          headers: {authorization: this._token}
       }
     } else {
       options = {
         method: method,
         headers: {
-          authorization: this._options.token,
+          authorization: this._token,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(dataObject)
@@ -60,21 +61,22 @@ export default class Api {
   }
 
   deleteCard(deleteElement) {
-    console.log(deleteElement)
-    this._urlDeleteCard = `https://mesto.nomoreparties.co/v1/${this._cohortId}/cards/${deleteElement.id}`
+    this._urlDeleteCard = `${this._urlBase}/cards/${deleteElement.id}`
     return this._requestServer(this._urlDeleteCard, 'DELETE')
   }
 
-  getLikesCount() {
+  // getLikesCount() {
 
+  // }
+
+  addLike(cardId) {
+    this._urlLike = `${this._urlBase}/cards/${cardId}/likes`
+    return this._requestServer(this._urlLike, 'PUT')
   }
 
-  addLike() {
-
-  }
-
-  removeLike() {
-
+  removeLike(cardId) {
+    this._urlLike = `${this._urlBase}/cards/${cardId}/likes`
+    return this._requestServer(this._urlLike, 'DELETE')
   }
 
   updateAvatar() {

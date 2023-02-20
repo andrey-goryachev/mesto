@@ -55,9 +55,11 @@ const settingsValidation = {
   errorClass: 'popup__error_visible'
 }
 
+const cohortId = 'cohort-60'
+
 const apiOptions = {
-  cohortId: 'cohort-60',
-  token: '18e4741a-6c44-4105-91a3-2c8e1e3592b8'
+  token: '18e4741a-6c44-4105-91a3-2c8e1e3592b8',
+  urlBase: `https://mesto.nomoreparties.co/v1/${cohortId}`
 }
 
 
