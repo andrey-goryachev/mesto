@@ -120,6 +120,28 @@
       <button class="popup__submit popup__submit_content_delete-card button button button_opacity_light" type="button">Да</button>
     </div>
   </div>
+
+  <div class="popup popup_content_avatar">
+    <div class="popup__container popup__container_content_avatar">
+      <button class="popup__cross button button_opacity_medium" type="button"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form class="popup__form" name="profile-avatar">
+        <input
+          class="popup__input popup__input_content_avatar"
+          id="profile-avatar"
+          name="avatar"
+          type="url"
+          value=""
+          placeholder="Ссылка на аватар"
+          aria-label="Заполнить ссылку на аватар"
+          required
+        >
+        <span class="popup__error profile-avatar-error"></span>
+        <button class="popup__submit popup__submit_content_avatar button button_opacity_light" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
   <template id="elements__card">
     <li class="elements__card">
       <img src="#" alt="" class="elements__photo">
