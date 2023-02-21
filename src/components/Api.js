@@ -1,6 +1,5 @@
 export default class Api {
   constructor(options) {
-    // this._options = options;
     this._token = options.token
     this._headers = {authorization: options.token}
     this._urlBase = options.urlBase
@@ -9,7 +8,7 @@ export default class Api {
     this._urlGetCards = `${this._urlBase}/cards`
     this._urlSetProfile = `${this._urlBase}/users/me`
     this._urlAddCard = `${this._urlBase}/cards`
-    
+    this._urlUpdateAvatar = `${this._urlBase}/users/me/avatar`
   }
 
   _requestServer(url, method, dataObject) {
@@ -41,7 +40,6 @@ export default class Api {
       .then((res) => {
         return res
       })
-      .catch(err => console.log(err))
   }
 
   getProfile() {
@@ -65,21 +63,17 @@ export default class Api {
     return this._requestServer(this._urlDeleteCard, 'DELETE')
   }
 
-  // getLikesCount() {
-
-  // }
-
   addLike(cardId) {
     this._urlLike = `${this._urlBase}/cards/${cardId}/likes`
     return this._requestServer(this._urlLike, 'PUT')
   }
 
   removeLike(cardId) {
-    this._urlLike = `${this._urlBase}/cards/${cardId}/likes`
+    this._urlLike = `${this._urlBase}/cards/${cardId}/like~s`
     return this._requestServer(this._urlLike, 'DELETE')
   }
 
   updateAvatar() {
-
+    return this._requestServer(this._urlUpdateAvatar, 'PATCH')
   }
 }
