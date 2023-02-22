@@ -69,7 +69,7 @@ export default class Api {
   }
 
   removeLike(cardId) {
-    this._urlLike = `${this._urlBase}/cards/${cardId}/like~s`
+    this._urlLike = `${this._urlBase}/cards/${cardId}/likes`
     return this._requestServer(this._urlLike, 'DELETE')
   }
 

@@ -4,6 +4,7 @@ export default class UserInfo {
     this._info = info;
     this._avatar = avatar;
     this._id = '';
+    // this._id = id
   }
 
   getInfo() {

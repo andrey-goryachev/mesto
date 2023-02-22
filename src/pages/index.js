@@ -3,6 +3,7 @@ import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirmation from '../components/PopupWithConfirmation';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import './index.css';
@@ -28,7 +29,9 @@ import {
   selectorElementBinActive,
   selectorElementBin,
 } from '../utils/constants.js';
-import PopupWithConfirmation from '../components/PopupWithConfirmation';
+// import {
+//   writeProfile
+// } from '../utils/utils.js'
 
 // Создать класс Апи
 const api = new Api(apiOptions);
@@ -43,8 +46,7 @@ const user = new UserInfo({
 // Записать данные из формы в класс профиля
 const writeProfile = (e, { name, description }) => {
   e.preventDefault();
-  api
-    .setProfile({ name, about: description })
+  api.setProfile({ name, about: description })
     .then((res) => {
       user.setInfo({ name: res.name, info: res.about });
     })
@@ -67,7 +69,8 @@ const deleteCardOnServer = (deleteElement) => {
       popupWithConfirmation.close();
       deleteElement.remove();
       deleteElement = null;
-    });
+    })
+    .catch((err) => console.log(err));;
 };
 
 const popupWithConfirmation = new PopupWithConfirmation(selectorPopupWithConfirmation, deleteCardOnServer);
@@ -109,8 +112,10 @@ const sendLikeToServer = (cardId, userLikes) => {
 
 // Создать карточку и добавить в список
 const renderCard = (card) => {
+  // console.log('start renderCard')
   const userId = user.getInfo().id;
-  const cardElement = new Card(
+  // console.log(`userId ${user.getInfo()}`)
+  return new Card(
     card,
     selectorTemplateCard,
     openPopupWithImage,
@@ -118,16 +123,30 @@ const renderCard = (card) => {
     userId,
     sendLikeToServer
   ).generateCard();
-  cardList.addItem(cardElement);
 };
 
-const cardList = new Section(
+
+// const cardList = new Section(
+//   {
+//     items: api.getInitialCards().then((res) => (res = res.reverse())),
+//     // items: [],
+//     renderer: renderCard,
+//   },
+//   selectorElementsList
+// );
+
+const cardList = (cards) => {
+  return new Section(
   {
-    items: api.getInitialCards().then((res) => (res = res.reverse())),
+    // items: api.getInitialCards().then((res) => (res = res.reverse())),
+    items: cards,
     renderer: renderCard,
   },
   selectorElementsList
-);
+  )
+};
+
+let section;
 
 // Заполнить форму данными из полей профиля
 const fillProfileFormFields = () => {
@@ -142,11 +161,9 @@ const writeCard = (e, card) => {
   const formatCard = {};
   formatCard.name = card.place;
   formatCard.link = card.image;
-  api
-    .addCard(formatCard)
+  api.addCard(formatCard)
     .then((res) => {
-      console.log(res);
-      renderCard(res);
+      section.addItem(renderCard(res));
     })
     .catch((err) => {
       console.log(err);
@@ -168,10 +185,59 @@ const getProfile = () => {
     .catch((err) => console.log(err));
 };
 
+const getProfileAndCards = () => {
+  const profilePromise = api.getProfile()
+  const cardsPromise = api.getInitialCards()
+  Promise.all([profilePromise, cardsPromise])
+    .then((results) => {
+      const profile = results[0]
+      const cards = results[1].reverse()
+
+      user.setInfo({ name: profile.name, info: profile.about });
+      user.setAvatar(profile.avatar);
+      user.setId(profile._id);
+
+      // найти способ загрузить карточки из этого запроса с проверкой id
+      section = cardList(cards)
+      section.renderItem();
+
+    })
+    .catch((err) => console.log(err));
+}
+
+// const getCards = () => {
+//   return api.getInitialCards()
+//     .then((res) => {
+//       res = res.reverse()
+//       section = cardList(res)
+//       section.renderItem();
+//     })
+//     .catch((err) => { console.log(err) })
+// }
+
+// // Создать и вставить карточку в разметку
+// const writeCard = (e, card) => {
+//   e.preventDefault();
+//   const formatCard = {};
+//   formatCard.name = card.place;
+//   formatCard.link = card.image;
+//   api.addCard(formatCard)
+//     .then((res) => {
+//       console.log(res)
+//       // section.addItem(renderCard(res));
+//       // // getProfileAndCards()
+//       // getCards()
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', () => {
-  getProfile();
-  cardList.renderItem();
+  getProfileAndCards()
+  // getProfile();
+  // cardList.renderItem();
 });
 
 // Открыть попап-форму редактирования профиля при нажатии кнопки
