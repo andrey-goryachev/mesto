@@ -6,9 +6,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithConfirmation from '../components/PopupWithConfirmation';
 import User from '../components/User.js';
 import Api from '../components/Api.js';
-import './index.css';
 import {
-  // initialCards,
   buttonEditProfile,
   profileName,
   profileDescription,
@@ -26,69 +24,56 @@ import {
   apiOptions,
   avatar,
   selectorPopupWithConfirmation,
-  selectorElementBinActive,
-  selectorElementBin,
   selectorPopupAvatar,
   formAvatarPopup
 } from '../utils/constants.js';
-// import {
-//   writeProfile
-// } from '../utils/utils.js'
+import './index.css';
+
+let sectionCards;
+
+// Валидаторы
+const validatorProfile = new FormValidator(settingsValidation, formProfilePopup);
+const validatorCard = new FormValidator(settingsValidation, formCardPopup);
+const validatorAvatar = new FormValidator(settingsValidation, formAvatarPopup)
 
 // Создать класс Апи
 const api = new Api(apiOptions);
 
-// const loader = () => {
-
-// }
-
-const avatarPopupSubmit = (e, {avatar}) => {
-  console.log('avatarPopupSubmit')
-  // console.log(e)
-  // loader()
-  console.log(avatar)
-  return api.updateAvatar(avatar)
+// Создать попоп для аватара
+const avatarPopup = new PopupWithForm(selectorPopupAvatar, (e, { avatar }) => {
+  return api
+    .updateAvatar(avatar)
     .then((res) => {
-      console.log(res) 
-      return user.setAvatar(res.avatar)
+      return user.setAvatar(res.avatar);
     })
-    //  .then((unloaded) => { 
-    //   loader()
-    // })
     .catch((err) => console.log(err));
-}
-
-const avatarPopup = new PopupWithForm(selectorPopupAvatar, avatarPopupSubmit)
+});
 avatarPopup.setEventListeners()
-
-const avatarOpen = () => {
-  console.log('change ava')
-  avatarPopup.open()
-}
 
 // Создать класс профиля
 const user = new User({
   name: profileName,
   info: profileDescription,
   avatar: avatar,
-  changeAvatar: avatarOpen
+  changeAvatar: () => {
+    avatarPopup.open()
+  }
 });
 
-// Записать данные из формы в класс профиля
-const writeProfile = (e, { name, description }) => {
+// Создать попап для профиля
+const profilePopup = new PopupWithForm(selectorPopupProfile, (e, { name, description }) => {
   e.preventDefault();
   return api.setProfile({ name, about: description })
     .then((res) => {
       return user.setInfo({ name: res.name, info: res.about });
     })
     .catch((err) => console.log(err));
-};
-
-// Создать попап-форму для редактирования профиля и включить события
-const profilePopup = new PopupWithForm(selectorPopupProfile, writeProfile);
+});
 profilePopup.setEventListeners();
 
-const deleteCardOnServer = (deleteElement) => {
+
+// Создать попап для подтверждения удаления карточки
+const popupWithConfirmation = new PopupWithConfirmation(selectorPopupWithConfirmation, (deleteElement) => {
   api
     .deleteCard(deleteElement)
     .then((res) => {
@@ -102,28 +87,24 @@ const deleteCardOnServer = (deleteElement) => {
       deleteElement = null;
     })
     .catch((err) => console.log(err));;
-};
-
-const popupWithConfirmation = new PopupWithConfirmation(selectorPopupWithConfirmation, deleteCardOnServer);
+});
 popupWithConfirmation.setEventListeners();
 
-// Валидаторы
-const validatorProfile = new FormValidator(settingsValidation, formProfilePopup);
-const validatorCard = new FormValidator(settingsValidation, formCardPopup);
-const validatorAvatar = new FormValidator(settingsValidation, formAvatarPopup)
 
-// Открыть попап фото
+// Создать и открыть попап для карточки
 const openPopupWithImage = (card) => {
   const popup = new PopupWithImage(selectorPopupContentPhoto, card);
   popup.setEventListeners();
   popup.open();
 };
-
+ 
+// Открыть попап для удаления карточки
 const handleDeleteCard = (e) => {
   let deleteElement = e.target.closest('.elements__card');
   popupWithConfirmation.open(deleteElement);
 };
 
+// Отправить лайк на сервер
 const sendLikeToServer = (cardId, userLikes) => {
   if (userLikes) {
     return api
@@ -144,9 +125,7 @@ const sendLikeToServer = (cardId, userLikes) => {
 
 // Создать карточку и добавить в список
 const renderCard = (card) => {
-  // console.log('start renderCard')
   const userId = user.getInfo().id;
-  // console.log(`userId ${user.getInfo()}`)
   return new Card(
     card,
     selectorTemplateCard,
@@ -157,20 +136,9 @@ const renderCard = (card) => {
   ).generateCard();
 };
 
-
-// const cardList = new Section(
-//   {
-//     items: api.getInitialCards().then((res) => (res = res.reverse())),
-//     // items: [],
-//     renderer: renderCard,
-//   },
-//   selectorElementsList
-// );
-
 const cardList = (cards) => {
   return new Section(
   {
-    // items: api.getInitialCards().then((res) => (res = res.reverse())),
     items: cards,
     renderer: renderCard,
   },
@@ -178,7 +146,7 @@ const cardList = (cards) => {
   )
 };
 
-let section;
+
 
 // Заполнить форму данными из полей профиля
 const fillProfileFormFields = () => {
@@ -195,7 +163,7 @@ const writeCard = (e, card) => {
   formatCard.link = card.image;
   return api.addCard(formatCard)
     .then((res) => {
-      return section.addItem(renderCard(res));
+      return sectionCards.addItem(renderCard(res));
     })
     .catch((err) => {
       console.log(err);
@@ -206,7 +174,7 @@ const writeCard = (e, card) => {
 const cardPopup = new PopupWithForm(selectorPopupCard, writeCard);
 cardPopup.setEventListeners();
 
-
+// Получить и записать профиль и карточки
 const getProfileAndCards = () => {
   const profilePromise = api.getProfile()
   const cardsPromise = api.getInitialCards()
@@ -220,9 +188,8 @@ const getProfileAndCards = () => {
       user.setId(profile._id);
       user.setEventListeners()
 
-      // найти способ загрузить карточки из этого запроса с проверкой id
-      section = cardList(cards)
-      section.renderItem();
+      sectionCards = cardList(cards)
+      sectionCards.renderItem();
 
     })
     .catch((err) => console.log(err));
@@ -232,8 +199,6 @@ const getProfileAndCards = () => {
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', () => {
   getProfileAndCards()
-  // getProfile();
-  // cardList.renderItem();
 });
 
 // Открыть попап-форму редактирования профиля при нажатии кнопки

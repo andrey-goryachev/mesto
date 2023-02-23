@@ -74,8 +74,6 @@ export default class Api {
   }
 
   updateAvatar(avatarLink) {
-    // this._urlUpdateAvatar = `${this._urlBase}/users/me/avatar`
-    console.log(avatarLink)
     return this._requestServer(this._urlUpdateAvatar, 'PATCH', {avatar: avatarLink})
   }
 }

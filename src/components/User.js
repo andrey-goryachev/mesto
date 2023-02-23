@@ -6,7 +6,6 @@ export default class User {
     this._avatarContainer = avatar.parentNode;
     this._changeAvatar = changeAvatar;
     this._id = '';
-    // this._id = id
   }
 
   setEventListeners() {
