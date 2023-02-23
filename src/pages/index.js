@@ -4,7 +4,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithConfirmation from '../components/PopupWithConfirmation';
-import UserInfo from '../components/UserInfo.js';
+import User from '../components/User.js';
 import Api from '../components/Api.js';
 import './index.css';
 import {
@@ -28,6 +28,8 @@ import {
   selectorPopupWithConfirmation,
   selectorElementBinActive,
   selectorElementBin,
+  selectorPopupAvatar,
+  formAvatarPopup
 } from '../utils/constants.js';
 // import {
 //   writeProfile
@@ -36,19 +38,48 @@ import {
 // Создать класс Апи
 const api = new Api(apiOptions);
 
+// const loader = () => {
+
+// }
+
+const avatarPopupSubmit = (e, {avatar}) => {
+  console.log('avatarPopupSubmit')
+  // console.log(e)
+  // loader()
+  console.log(avatar)
+  return api.updateAvatar(avatar)
+    .then((res) => {
+      console.log(res) 
+      return user.setAvatar(res.avatar)
+    })
+    //  .then((unloaded) => { 
+    //   loader()
+    // })
+    .catch((err) => console.log(err));
+}
+
+const avatarPopup = new PopupWithForm(selectorPopupAvatar, avatarPopupSubmit)
+avatarPopup.setEventListeners()
+
+const avatarOpen = () => {
+  console.log('change ava')
+  avatarPopup.open()
+}
+
 // Создать класс профиля
-const user = new UserInfo({
+const user = new User({
   name: profileName,
   info: profileDescription,
   avatar: avatar,
+  changeAvatar: avatarOpen
 });
 
 // Записать данные из формы в класс профиля
 const writeProfile = (e, { name, description }) => {
   e.preventDefault();
-  api.setProfile({ name, about: description })
+  return api.setProfile({ name, about: description })
     .then((res) => {
-      user.setInfo({ name: res.name, info: res.about });
+      return user.setInfo({ name: res.name, info: res.about });
     })
     .catch((err) => console.log(err));
 };
@@ -79,6 +110,7 @@ popupWithConfirmation.setEventListeners();
 // Валидаторы
 const validatorProfile = new FormValidator(settingsValidation, formProfilePopup);
 const validatorCard = new FormValidator(settingsValidation, formCardPopup);
+const validatorAvatar = new FormValidator(settingsValidation, formAvatarPopup)
 
 // Открыть попап фото
 const openPopupWithImage = (card) => {
@@ -161,9 +193,9 @@ const writeCard = (e, card) => {
   const formatCard = {};
   formatCard.name = card.place;
   formatCard.link = card.image;
-  api.addCard(formatCard)
+  return api.addCard(formatCard)
     .then((res) => {
-      section.addItem(renderCard(res));
+      return section.addItem(renderCard(res));
     })
     .catch((err) => {
       console.log(err);
@@ -174,16 +206,6 @@ const writeCard = (e, card) => {
 const cardPopup = new PopupWithForm(selectorPopupCard, writeCard);
 cardPopup.setEventListeners();
 
-const getProfile = () => {
-  api
-    .getProfile()
-    .then((res) => {
-      user.setInfo({ name: res.name, info: res.about });
-      user.setAvatar(res.avatar);
-      user.setId(res._id);
-    })
-    .catch((err) => console.log(err));
-};
 
 const getProfileAndCards = () => {
   const profilePromise = api.getProfile()
@@ -196,6 +218,7 @@ const getProfileAndCards = () => {
       user.setInfo({ name: profile.name, info: profile.about });
       user.setAvatar(profile.avatar);
       user.setId(profile._id);
+      user.setEventListeners()
 
       // найти способ загрузить карточки из этого запроса с проверкой id
       section = cardList(cards)
@@ -205,33 +228,6 @@ const getProfileAndCards = () => {
     .catch((err) => console.log(err));
 }
 
-// const getCards = () => {
-//   return api.getInitialCards()
-//     .then((res) => {
-//       res = res.reverse()
-//       section = cardList(res)
-//       section.renderItem();
-//     })
-//     .catch((err) => { console.log(err) })
-// }
-
-// // Создать и вставить карточку в разметку
-// const writeCard = (e, card) => {
-//   e.preventDefault();
-//   const formatCard = {};
-//   formatCard.name = card.place;
-//   formatCard.link = card.image;
-//   api.addCard(formatCard)
-//     .then((res) => {
-//       console.log(res)
-//       // section.addItem(renderCard(res));
-//       // // getProfileAndCards()
-//       // getCards()
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
 
 // Загрузка страницы
 document.addEventListener('DOMContentLoaded', () => {
@@ -254,3 +250,4 @@ buttonAddCard.addEventListener('click', () => {
 // Включить валидацию
 validatorProfile.enableValidation();
 validatorCard.enableValidation();
+validatorAvatar.enableValidation()

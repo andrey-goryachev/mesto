@@ -45,6 +45,8 @@ const avatar = document.querySelector('.profile__avatar')
 const selectorPopupWithConfirmation = '.popup_content_delete-card'
 const selectorElementBinActive = '.elements__bin_active'
 const selectorElementBin = '.elements__bin_active'
+const selectorPopupAvatar = '.popup_content_avatar'
+const formAvatarPopup = document.querySelector(selectorPopupAvatar).querySelector('.popup__form');
 
 const settingsValidation = {
   formSelector: '.popup__form',
@@ -83,5 +85,7 @@ export {
   avatar,
   selectorPopupWithConfirmation,
   selectorElementBinActive,
-  selectorElementBin
+  selectorElementBin,
+  selectorPopupAvatar,
+  formAvatarPopup
 }

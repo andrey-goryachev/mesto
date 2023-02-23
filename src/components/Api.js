@@ -34,7 +34,7 @@ export default class Api {
         if (res.ok) {
           return res.json()
         } else {
-          return Promise.reject(`Ошибка статус ${res.status}`)
+          return Promise.reject(`Ошибка!!! статус ${res.status}`)
         }
       })
       .then((res) => {
@@ -73,7 +73,9 @@ export default class Api {
     return this._requestServer(this._urlLike, 'DELETE')
   }
 
-  updateAvatar() {
-    return this._requestServer(this._urlUpdateAvatar, 'PATCH')
+  updateAvatar(avatarLink) {
+    // this._urlUpdateAvatar = `${this._urlBase}/users/me/avatar`
+    console.log(avatarLink)
+    return this._requestServer(this._urlUpdateAvatar, 'PATCH', {avatar: avatarLink})
   }
 }
