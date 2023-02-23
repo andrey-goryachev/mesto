@@ -18,7 +18,7 @@
   background-image: url('./../../../images/Vector.svg');
   background-repeat: no-repeat;
   background-position: center center;
-  transition: opacity 0.4s, visibility 0.4s
+  transition: opacity 0.4s, visibility 0.4s;
 }
 
 .profile__avatar-wrapper:hover::after {
