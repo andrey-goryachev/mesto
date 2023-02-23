@@ -36,9 +36,11 @@ export default class Card {
 
     this._buttonLike.addEventListener('click', (e) => {
       e.stopPropagation();
-      this._sendLikeToServer(this._cardElement.id, this._userLikes).then((card) => {
-        this.checkLikes(card);
-      });
+      this._sendLikeToServer(this._cardElement.id, this._userLikes)
+        .then((card) => {
+          this.checkLikes(card);
+        })
+        .catch((err) => { console.log(err) })
     });
   }
 

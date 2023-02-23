@@ -9,7 +9,6 @@ export default class Section {
       return this._items.map((item) => {
         this.addItem(this._renderer(item))
       })
-    
   }
 
   addItem(element) {

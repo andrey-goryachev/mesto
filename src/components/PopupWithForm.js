@@ -30,7 +30,8 @@ export default class PopupWithForm extends Popup {
       e.preventDefault()
       this._buttonSubmit.textContent = 'Сохранение...'
       this._submitForm(e, this._getInputValues())
-        .then((result) => { this._loader()})
+        .then(() => { this._loader()})
+        .catch((err) => { console.log(err) })
     })
   }
 
