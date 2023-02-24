@@ -1,5 +1,6 @@
 export default class Card {
   constructor(card, templateSelector, handleCardClick, handleDeleteCard, userId, sendLikeToServer) {
+  // constructor(card, templateSelector, handleCardClick, handleDeleteCard, userId, handleLike) {
     this._card = card;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
@@ -9,6 +10,7 @@ export default class Card {
     
 
     this._sendLikeToServer = sendLikeToServer;
+    // this._handleLike = handleLike;
   }
 
   _getCardElement() {
@@ -25,22 +27,22 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._cardElement.addEventListener('click', () => {
+    this._photo.addEventListener('click', () => {
       this._handleCardClick(this._card);
     });
 
     this._buttonDelete.addEventListener('click', (e) => {
-      e.stopPropagation();
       this._handleDeleteCard(e);
     });
 
-    this._buttonLike.addEventListener('click', (e) => {
-      e.stopPropagation();
+    this._buttonLike.addEventListener('click', () => {
       this._sendLikeToServer(this._cardElement.id, this._userLikes)
         .then((card) => {
           this.checkLikes(card);
         })
         .catch((err) => { console.log(err) })
+
+      // this._handleLike(this)
     });
   }
 

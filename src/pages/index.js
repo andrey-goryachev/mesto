@@ -136,6 +136,10 @@ const sendLikeToServer = (cardId, userLikes) => {
   }
 };
 
+// const handleLike = () => {
+
+// }
+
 // Создать карточку и добавить в список
 const renderCard = (card) => {
   const userId = user.getInfo().id;
