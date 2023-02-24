@@ -107,9 +107,9 @@ popupWithConfirmation.setEventListeners();
 
 // Создать и открыть попап для карточки
 const openPopupWithImage = (card) => {
-  const popup = new PopupWithImage(selectorPopupContentPhoto, card);
+  const popup = new PopupWithImage(selectorPopupContentPhoto);
   popup.setEventListeners();
-  popup.open();
+  popup.open(card);
 };
  
 const handleDeleteCard = (e) => {
