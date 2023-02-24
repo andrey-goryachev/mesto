@@ -13,7 +13,7 @@ export default class Section {
 
   addItem(element) {
     return new Promise((resolve, reject) => { 
-      this._container.append(element)
+      this._container.prepend(element)
       const childrensContainer = Array.from(this._container.children)
       childrensContainer.includes(element) ? resolve() : reject()
      })

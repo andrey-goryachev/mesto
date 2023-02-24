@@ -36,6 +36,20 @@ const validatorProfile = new FormValidator(settingsValidation, formProfilePopup)
 const validatorCard = new FormValidator(settingsValidation, formCardPopup);
 const validatorAvatar = new FormValidator(settingsValidation, formAvatarPopup)
 
+// Включить валидацию
+validatorProfile.enableValidation();
+validatorCard.enableValidation();
+validatorAvatar.enableValidation()
+
+const toggleCardButtonState = () => { 
+  validatorCard.toggleButtonState()
+ }
+
+const toggleAvatarButtonState = () => { 
+  validatorAvatar.toggleButtonState()
+ }
+
+
 // Создать класс Апи
 const api = new Api(apiOptions);
 
@@ -47,7 +61,7 @@ const avatarPopup = new PopupWithForm(selectorPopupAvatar, (e, { avatar }) => {
       return user.setAvatar(res.avatar);
     })
     .catch((err) => console.log(err));
-});
+}, toggleAvatarButtonState);
 avatarPopup.setEventListeners()
 
 // Создать класс профиля
@@ -146,8 +160,6 @@ const cardList = (cards) => {
   )
 };
 
-
-
 // Заполнить форму данными из полей профиля
 const fillProfileFormFields = () => {
   const userInfo = user.getInfo();
@@ -163,6 +175,7 @@ const writeCard = (e, card) => {
   formatCard.link = card.image;
   return api.addCard(formatCard)
     .then((res) => {
+      validatorCard.toggleButtonState()
       return sectionCards.addItem(renderCard(res));
     })
     .catch((err) => {
@@ -170,8 +183,10 @@ const writeCard = (e, card) => {
     });
 };
 
+
+
 // Создать попап-форму добавления карточки и включить события
-const cardPopup = new PopupWithForm(selectorPopupCard, writeCard);
+const cardPopup = new PopupWithForm(selectorPopupCard, writeCard, toggleCardButtonState);
 cardPopup.setEventListeners();
 
 // Получить и записать профиль и карточки
@@ -212,7 +227,7 @@ buttonAddCard.addEventListener('click', () => {
   cardPopup.open();
 });
 
-// Включить валидацию
-validatorProfile.enableValidation();
-validatorCard.enableValidation();
-validatorAvatar.enableValidation()
+// // Включить валидацию
+// validatorProfile.enableValidation();
+// validatorCard.enableValidation();
+// validatorAvatar.enableValidation()

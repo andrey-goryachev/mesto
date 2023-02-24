@@ -1,13 +1,14 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-  constructor(selector, submitForm) {
+  constructor(selector, submitForm, toggleButtonState) {
     super(selector);
     this._popup = document.querySelector(this._selector);
     this._form = this._popup.querySelector('.popup__form');
     this._buttonSubmit = this._form.querySelector('.popup__submit')
     this._buttonStartTextContent = this._buttonSubmit.textContent
     this._submitForm = submitForm;
+    this._toggleButtonState = toggleButtonState ? toggleButtonState : () => {}
   }
 
   _getInputValues() {
@@ -22,6 +23,7 @@ export default class PopupWithForm extends Popup {
   _loader() {
     this.close()
     this._buttonSubmit.textContent = this._buttonStartTextContent
+    this._toggleButtonState()
   }
 
   setEventListeners() {
