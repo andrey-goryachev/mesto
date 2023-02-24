@@ -67,7 +67,7 @@ avatarPopup.setEventListeners()
 // Создать класс профиля
 const user = new UserInfo({
   name: profileName,
-  info: profileDescription,
+  about: profileDescription,
   avatar: avatar,
   changeAvatar: () => {
     avatarPopup.open()
@@ -75,11 +75,11 @@ const user = new UserInfo({
 });
 
 // Создать попап для профиля
-const profilePopup = new PopupWithForm(selectorPopupProfile, (e, { name, description }) => {
+const profilePopup = new PopupWithForm(selectorPopupProfile, (e, { name, about }) => {
   e.preventDefault();
-  return api.setProfile({ name, about: description })
+  return api.setProfile({ name, about })
     .then((res) => {
-      return user.setInfo({ name: res.name, info: res.about });
+      return user.setInfo({ name: res.name, about: res.about });
     })
     .catch((err) => console.log(err));
 });
@@ -164,13 +164,6 @@ const createSection = (cards) => {
   )
 };
 
-// Заполнить форму данными из полей профиля
-const fillProfileFormFields = () => {
-  const userInfo = user.getInfo();
-  popupProfileInputName.value = userInfo.name;
-  popupProfileInputDescription.value = userInfo.info;
-};
-
 // Создать и вставить карточку в разметку
 const writeCard = (e, card) => {
   e.preventDefault();
@@ -200,7 +193,7 @@ const getProfileAndCards = () => {
       const profile = results[0]
       const cards = results[1].reverse()
 
-      user.setInfo({ name: profile.name, info: profile.about });
+      user.setInfo({ name: profile.name, about: profile.about });
       user.setAvatar(profile.avatar);
       user.setId(profile._id);
       user.setEventListeners()
@@ -219,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Открыть попап-форму редактирования профиля при нажатии кнопки
 buttonEditProfile.addEventListener('click', () => {
-  fillProfileFormFields();
+  profilePopup.setInputValues(user.getInfo())
   profilePopup.open();
 });
 

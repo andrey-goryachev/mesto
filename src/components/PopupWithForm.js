@@ -5,6 +5,7 @@ export default class PopupWithForm extends Popup {
     super(selector);
     this._popup = document.querySelector(this._selector);
     this._form = this._popup.querySelector('.popup__form');
+    this._inputs = this._form.querySelectorAll('input');
     this._buttonSubmit = this._form.querySelector('.popup__submit');
     this._buttonStartTextContent = this._buttonSubmit.textContent;
     this._submitForm = submitForm;
@@ -12,12 +13,19 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    this._inputs = this._form.querySelectorAll('input');
+    // this._inputs = this._form.querySelectorAll('input');
     this._values = {};
     this._inputs.forEach((input) => {
       this._values[input.name] = input.value;
     });
     return this._values;
+  }
+
+  setInputValues(data) {
+    this._inputs.forEach((input) => {
+      // тут вставляем в `value` инпута данные из объекта по атрибуту `name` этого инпута
+      input.value = data[input.name];
+    });
   }
 
   setEventListeners() {
