@@ -18,7 +18,7 @@ export default class FormValidator {
     errorElement.textContent = '';
   }
 
-  _isValid(input) {
+  _checkValidity(input) {
     if (!input.validity.valid) {
       this._showInputError(input);
     } else {
@@ -28,7 +28,7 @@ export default class FormValidator {
 
   _setEventListeners(input) {
     input.addEventListener('input', () => {
-      this._isValid(input)
+      this._checkValidity(input)
       this.toggleButtonState()
     })
   }

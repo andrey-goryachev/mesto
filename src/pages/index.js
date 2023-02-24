@@ -4,7 +4,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithConfirmation from '../components/PopupWithConfirmation';
-import User from '../components/User.js';
+import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import {
   buttonEditProfile,
@@ -65,7 +65,7 @@ const avatarPopup = new PopupWithForm(selectorPopupAvatar, (e, { avatar }) => {
 avatarPopup.setEventListeners()
 
 // Создать класс профиля
-const user = new User({
+const user = new UserInfo({
   name: profileName,
   info: profileDescription,
   avatar: avatar,
@@ -112,7 +112,6 @@ const openPopupWithImage = (card) => {
   popup.open();
 };
  
-// Открыть попап для удаления карточки
 const handleDeleteCard = (e) => {
   let deleteElement = e.target.closest('.elements__card');
   popupWithConfirmation.open(deleteElement);
@@ -150,7 +149,8 @@ const renderCard = (card) => {
   ).generateCard();
 };
 
-const cardList = (cards) => {
+
+const createSection = (cards) => {
   return new Section(
   {
     items: cards,
@@ -183,8 +183,6 @@ const writeCard = (e, card) => {
     });
 };
 
-
-
 // Создать попап-форму добавления карточки и включить события
 const cardPopup = new PopupWithForm(selectorPopupCard, writeCard, toggleCardButtonState);
 cardPopup.setEventListeners();
@@ -203,9 +201,8 @@ const getProfileAndCards = () => {
       user.setId(profile._id);
       user.setEventListeners()
 
-      sectionCards = cardList(cards)
+      sectionCards = createSection(cards)
       sectionCards.renderItem();
-
     })
     .catch((err) => console.log(err));
 }
@@ -226,8 +223,3 @@ buttonEditProfile.addEventListener('click', () => {
 buttonAddCard.addEventListener('click', () => {
   cardPopup.open();
 });
-
-// // Включить валидацию
-// validatorProfile.enableValidation();
-// validatorCard.enableValidation();
-// validatorAvatar.enableValidation()

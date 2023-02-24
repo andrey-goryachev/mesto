@@ -13,17 +13,17 @@ export default class Popup {
     }
   }
 
-  _eventClickOutside = (evt) => {
+  _clickOutside = (evt) => {
     if (evt.target.classList.contains('popup')) {
       this.close();
     }
   };
 
-  _eventButtonClose = () => this.close()
+  _clickButtonClose = () => this.close()
 
   setEventListeners() {
-    this._popup.addEventListener('mousedown', this._eventClickOutside);
-    this._buttonClose.addEventListener('click', this._eventButtonClose);
+    this._popup.addEventListener('mousedown', this._clickOutside);
+    this._buttonClose.addEventListener('click', this._clickButtonClose);
   }
 
   open() {
