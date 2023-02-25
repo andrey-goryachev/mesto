@@ -1,21 +1,21 @@
 export default class Section {
-  constructor({items, renderer}, selectorContainer) {
+  constructor({ items, renderer }, selectorContainer) {
     this._items = items;
     this._renderer = renderer;
     this._container = document.querySelector(selectorContainer);
   }
 
-  renderItem() {   
-      return this._items.map((item) => {
-        this.addItem(this._renderer(item))
-      })
+  renderItem() {
+    return this._items.map((item) => {
+      this.addItem(this._renderer(item));
+    });
+  }
+
+  prependItem(element) {
+    this._container.prepend(element);
   }
 
   addItem(element) {
-    return new Promise((resolve, reject) => { 
-      this._container.prepend(element)
-      const childrensContainer = Array.from(this._container.children)
-      childrensContainer.includes(element) ? resolve() : reject()
-     })
+    this._container.append(element);
   }
 }

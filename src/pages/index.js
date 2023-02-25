@@ -173,7 +173,8 @@ const writeCard = (e, card) => {
   return api.addCard(formatCard)
     .then((res) => {
       validatorCard.toggleButtonState()
-      return sectionCards.addItem(renderCard(res));
+      // return sectionCards.addItem(renderCard(res));
+      sectionCards.prependItem(renderCard(res));
     })
     .catch((err) => {
       console.log(err);
