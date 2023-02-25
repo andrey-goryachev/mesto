@@ -31,23 +31,18 @@ import {
 import './index.css';
 
 let sectionCards;
-
-
 const formValidators = {}
+
 // Включение валидации
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector))
   formList.forEach((formElement) => {
     const validator = new FormValidator(config, formElement)
-// получаем данные из атрибута `name` у формы
     const formName = formElement.getAttribute('name')
-
-   // вот тут в объект записываем под именем формы
     formValidators[formName] = validator;
    validator.enableValidation();
   });
 };
-
 enableValidation(settingsValidation);
 
 // Создать класс Апи
@@ -63,8 +58,7 @@ const avatarPopup = new PopupWithForm(
         return user.setAvatar(res.avatar);
       })
       .catch((err) => console.log(err));
-  },
-  // toggleAvatarButtonState
+  }
 );
 avatarPopup.setEventListeners();
 
@@ -110,8 +104,7 @@ const popupWithConfirmation = new PopupWithConfirmation(selectorPopupWithConfirm
 });
 popupWithConfirmation.setEventListeners();
 
-
-
+// Создать попап c фото
 const popupWithImage = new PopupWithImage(selectorPopupContentPhoto);
 popupWithImage.setEventListeners();
 
@@ -161,18 +154,6 @@ const renderCard = (card) => {
   ).generateCard();
 };
 
-
-// тут иправить создавать экхемпляр можно только один раз
-const createSection = (cards) => {
-  return new Section(
-    {
-      items: cards,
-      renderer: renderCard,
-    },
-    selectorElementsList
-  );
-};
-
 // Создать и вставить карточку в разметку
 const writeCard = (e, card) => {
   e.preventDefault();
@@ -182,7 +163,6 @@ const writeCard = (e, card) => {
   return api
     .addCard(formatCard)
     .then((res) => {
-      // validatorCard.toggleButtonState();
       sectionCards.prependItem(renderCard(res));
     })
     .catch((err) => {
@@ -209,7 +189,13 @@ const getProfileAndCards = () => {
         _id: profile._id,
       });
 
-      sectionCards = createSection(cards);
+      sectionCards = new Section(
+        {
+          items: cards,
+          renderer: renderCard,
+        },
+        selectorElementsList
+      );
       sectionCards.renderItem();
     })
     .catch((err) => console.log(err));
