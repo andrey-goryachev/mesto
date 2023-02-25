@@ -32,23 +32,23 @@ import './index.css';
 
 let sectionCards;
 
-// Валидаторы
-const validatorProfile = new FormValidator(settingsValidation, formProfilePopup);
-const validatorCard = new FormValidator(settingsValidation, formCardPopup);
-const validatorAvatar = new FormValidator(settingsValidation, formAvatarPopup);
 
-// Включить валидацию
-validatorProfile.enableValidation();
-validatorCard.enableValidation();
-validatorAvatar.enableValidation();
+const formValidators = {}
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement)
+// получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name')
 
-const toggleCardButtonState = () => {
-  validatorCard.toggleButtonState();
+   // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+   validator.enableValidation();
+  });
 };
 
-const toggleAvatarButtonState = () => {
-  validatorAvatar.toggleButtonState();
-};
+enableValidation(settingsValidation);
 
 // Создать класс Апи
 const api = new Api(apiOptions);
@@ -64,7 +64,7 @@ const avatarPopup = new PopupWithForm(
       })
       .catch((err) => console.log(err));
   },
-  toggleAvatarButtonState
+  // toggleAvatarButtonState
 );
 avatarPopup.setEventListeners();
 
@@ -110,16 +110,19 @@ const popupWithConfirmation = new PopupWithConfirmation(selectorPopupWithConfirm
 });
 popupWithConfirmation.setEventListeners();
 
-// Создать и открыть попап для карточки
+
+
+const popupWithImage = new PopupWithImage(selectorPopupContentPhoto);
+popupWithImage.setEventListeners();
+
+
 const openPopupWithImage = (card) => {
-  const popup = new PopupWithImage(selectorPopupContentPhoto);
-  popup.setEventListeners();
-  popup.open(card);
+  popupWithImage.open(card);
 };
 
-const handleDeleteCard = (e) => {
-  let deleteElement = e.target.closest('.elements__card');
-  popupWithConfirmation.open(deleteElement);
+
+const handleDeleteCard = (cardElement) => {
+  popupWithConfirmation.open(cardElement);
 };
 
 // Отправить лайк на сервер
@@ -158,6 +161,8 @@ const renderCard = (card) => {
   ).generateCard();
 };
 
+
+// тут иправить создавать экхемпляр можно только один раз
 const createSection = (cards) => {
   return new Section(
     {
@@ -177,7 +182,7 @@ const writeCard = (e, card) => {
   return api
     .addCard(formatCard)
     .then((res) => {
-      validatorCard.toggleButtonState();
+      // validatorCard.toggleButtonState();
       sectionCards.prependItem(renderCard(res));
     })
     .catch((err) => {
@@ -186,7 +191,7 @@ const writeCard = (e, card) => {
 };
 
 // Создать попап-форму добавления карточки и включить события
-const cardPopup = new PopupWithForm(selectorPopupCard, writeCard, toggleCardButtonState);
+const cardPopup = new PopupWithForm(selectorPopupCard, writeCard);
 cardPopup.setEventListeners();
 
 // Получить и записать профиль и карточки
@@ -194,9 +199,8 @@ const getProfileAndCards = () => {
   const profilePromise = api.getProfile();
   const cardsPromise = api.getInitialCards();
   Promise.all([profilePromise, cardsPromise])
-    .then((results) => {
-      const profile = results[0];
-      const cards = results[1].reverse();
+    .then(([profile, cards]) => {
+      cards = cards.reverse()
 
       user.setInfo({
         name: profile.name,
@@ -204,8 +208,6 @@ const getProfileAndCards = () => {
         avatar: profile.avatar,
         _id: profile._id,
       });
-      // user.setAvatar(profile.avatar);
-      // user.setId(profile._id);
 
       sectionCards = createSection(cards);
       sectionCards.renderItem();
@@ -220,15 +222,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Открыть попап-форму редактирования профиля при нажатии кнопки
 buttonEditProfile.addEventListener('click', () => {
+  formValidators['edit-profile'].resetValidation()
   profilePopup.setInputValues(user.getInfo());
   profilePopup.open();
 });
 
 // Открыть попап-форму добавления карточки при нажатии кнопки
 buttonAddCard.addEventListener('click', () => {
+  formValidators['edit-card'].resetValidation()
   cardPopup.open();
 });
 
 avatarWrapper.addEventListener('click', () => {
+  formValidators['profile-avatar'].resetValidation()
   avatarPopup.open();
 });

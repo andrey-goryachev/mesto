@@ -31,8 +31,8 @@ export default class Card {
       this._handleCardClick(this._card);
     });
 
-    this._buttonDelete.addEventListener('click', (e) => {
-      this._handleDeleteCard(e);
+    this._buttonDelete.addEventListener('click', () => {
+      this._handleDeleteCard(this._cardElement);
     });
 
     this._buttonLike.addEventListener('click', () => {
