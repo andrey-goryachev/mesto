@@ -27,6 +27,7 @@ const popupProfileInputDescription = popupProfile.querySelector('.popup__input_c
 const profileName = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__text');
 const avatar = document.querySelector('.profile__avatar')
+const avatarWrapper = document.querySelector('.profile__avatar-wrapper')
 const buttonEditProfile = document.querySelector('.profile__button_function_edit');
 const buttonAddCard = document.querySelector('.profile__button_function_add');
 
@@ -69,5 +70,6 @@ export {
   selectorElementBinActive,
   selectorElementBin,
   selectorPopupAvatar,
-  formAvatarPopup
+  formAvatarPopup,
+  avatarWrapper
 }
