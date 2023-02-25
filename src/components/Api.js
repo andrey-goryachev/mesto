@@ -10,7 +10,7 @@ export default class Api {
     this._urlUpdateAvatar = `${this._urlBase}/users/me/avatar`;
   }
 
-  _requestServer(url, method='GET', dataObject) {
+  _requestServer(url, method = 'GET', dataObject) {
     let options;
     if (method === 'GET') {
       options = {
