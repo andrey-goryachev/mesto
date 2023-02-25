@@ -1,25 +1,16 @@
 export default class Card {
-  constructor(card, templateSelector, handleCardClick, handleDeleteCard, userId, sendLikeToServer) {
-  // constructor(card, templateSelector, handleCardClick, handleDeleteCard, userId, handleLike) {
+  constructor(card, templateSelector, handleCardClick, handleDeleteCard, userId, handleLike) {
     this._card = card;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCard = handleDeleteCard;
     this._userId = userId;
     this._isOwner = this._card.owner._id === this._userId ? true : false;
-    
-
-    this._sendLikeToServer = sendLikeToServer;
-    // this._handleLike = handleLike;
+    this._handleLike = handleLike;
   }
 
   _getCardElement() {
     return document.querySelector(this._templateSelector).content.querySelector('.elements__card').cloneNode(true);
-  }
-
-  deleteCard() {
-    this._cardElement.remove();
-    this._cardElement = null;
   }
 
   _handleToggleLike(bool) {
@@ -34,20 +25,14 @@ export default class Card {
     this._buttonDelete.addEventListener('click', () => {
       this._handleDeleteCard(this._cardElement);
     });
-
+    
     this._buttonLike.addEventListener('click', () => {
-      this._sendLikeToServer(this._cardElement.id, this._userLikes)
-        .then((card) => {
-          this.checkLikes(card);
-        })
-        .catch((err) => { console.log(err) })
-
-      // this._handleLike(this)
+      this._handleLike(this);
     });
   }
 
   checkLikes(card) {
-    const likes = card.likes
+    const likes = card.likes;
     if (likes.length !== 0) {
       likes.forEach((like) => {
         if (like._id === this._userId) {
@@ -73,7 +58,6 @@ export default class Card {
     this._title = this._cardElement.querySelector('.elements__title');
     this._likesCounter = this._cardElement.querySelector('.elements__likes-counter');
     this._bin = this._cardElement.querySelector('.elements__bin');
-    
 
     this._photo.src = this._card.link;
     this._photo.alt = this._card.name;

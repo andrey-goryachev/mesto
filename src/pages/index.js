@@ -137,9 +137,23 @@ const sendLikeToServer = (cardId, userLikes) => {
   }
 };
 
-// const handleLike = () => {
-
-// }
+const handleLike = (card) => {
+  if (card._userLikes) {
+    return api
+      .removeLike(card._cardElement.id)
+      .then((newCard) => {card.checkLikes(newCard)})
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    return api
+      .addLike(card._cardElement.id)
+      .then((newCard) => {card.checkLikes(newCard)})
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+}
 
 // Создать карточку и добавить в список
 const renderCard = (card) => {
@@ -150,7 +164,7 @@ const renderCard = (card) => {
     openPopupWithImage,
     handleDeleteCard,
     userId,
-    sendLikeToServer
+    handleLike
   ).generateCard();
 };
 
