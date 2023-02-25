@@ -70,12 +70,7 @@ const profilePopup = new PopupWithForm(selectorPopupProfile, (e, { name, about }
   return api
     .setProfile({ name, about })
     .then((res) => {
-      return user.setInfo({
-        name: res.name,
-        about: res.about,
-        avatar: res.avatar,
-        _id: res._id,
-      });
+      return user.setInfo(res);
     })
     .catch((err) => console.log(err));
 });
@@ -115,7 +110,7 @@ const handleDeleteCard = (cardElement) => {
 const handleLike = (card) => {
   if (card._userLikes) {
     return api
-      .removeLike(card._cardElement.id)
+      .removeLike(card.cardElement.id)
       .then((newCard) => {
         card.checkLikes(newCard);
       })
@@ -124,7 +119,7 @@ const handleLike = (card) => {
       });
   } else {
     return api
-      .addLike(card._cardElement.id)
+      .addLike(card.cardElement.id)
       .then((newCard) => {
         card.checkLikes(newCard);
       })
@@ -167,13 +162,7 @@ const getProfileAndCards = () => {
   Promise.all([profilePromise, cardsPromise])
     .then(([profile, cards]) => {
       cards = cards.reverse();
-
-      user.setInfo({
-        name: profile.name,
-        about: profile.about,
-        avatar: profile.avatar,
-        _id: profile._id,
-      });
+      user.setInfo(profile);
 
       sectionCards = new Section(
         {
